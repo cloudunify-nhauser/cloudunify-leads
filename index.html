@@ -261,18 +261,11 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="lc">
 <img id="lclogo" src="" alt="Cloudunify">
 <div class="ltitle">Lead Intelligence Platform</div>
-<div class="lsub">Cloudunify Sales · Passwortgeschützt</div>
+<div class="lsub">Cloudunify Sales · Team-Login</div>
 <div id="pwform">
-<div class="llbl">Plattform-Passwort</div>
-<div style="position:relative">
-<input type="password" class="linp" id="pwinp" placeholder="Passwort eingeben..." style="margin-bottom:0;padding-right:44px">
-<span onclick="togglePW('pwinp',this)" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--muted);user-select:none">👁</span>
-</div>
-<div class="lerr" id="pwerr">Falsches Passwort</div>
-<button class="lbtn" id="pwbtn" onclick="checkPW()">Plattform öffnen</button>
-<div class="ldiv"><span>oder persönliches Konto</span></div>
+<input type="hidden" id="pwinp"><div style="display:none" id="pwerr"></div><button id="pwbtn" style="display:none"></button>
 <div class="llbl">E-Mail</div>
-<input type="email" class="linp" id="lemail" placeholder="name@firma.at">
+<input type="email" class="linp" id="lemail" placeholder="name@cloudunify.at">
 <div class="llbl">Passwort</div>
 <div style="position:relative">
 <input type="password" class="linp" id="lpw" placeholder="Passwort" style="margin-bottom:0;padding-right:44px">
@@ -280,7 +273,6 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 </div>
 <div class="lerr" id="lerr">E-Mail oder Passwort falsch</div>
 <button class="lbtn" id="lbtn" onclick="doLogin()">Anmelden</button>
-<div class="llink" id="showreg" onclick="document.getElementById("pwform").style.display="none";document.getElementById("rform").style.display="block"">Noch kein Konto? Jetzt registrieren</div>
 </div>
 <div id="rform">
 <div class="llbl">Name</div>
@@ -1594,17 +1586,29 @@ function showToast(msg, type){
 
 // ── BOOT ─────────────────────────────────────────────────────────
 window.addEventListener('load',function(){
-  // Setup lock screen buttons immediately on load (before unlock)
-  var pb=document.getElementById('pwbtn'); if(pb) pb.onclick=checkPW;
-  var pi=document.getElementById('pwinp'); if(pi) pi.onkeypress=function(e){if(e.key==='Enter')checkPW();};
+  // Clear all localStorage and re-register 4 team members fresh
+  var savedKey=localStorage.getItem('cu_apikey');
+  localStorage.clear();
+  // Restore API key so scan buttons stay active across reloads if key was set
+  if(savedKey) localStorage.setItem('cu_apikey',savedKey);
+  // Re-register team members with correct passwords
+  var pw=btoa('#Sales26CU#');
+  saveUsers([
+    {name:'Nicolas Hauser',email:'n.hauser@cloudunify.at',initials:'NH',color:'#2F79C5',role:'Sales',pw:pw},
+    {name:'Manfred Schmid',email:'m.schmid@cloudunify.at',initials:'MS',color:'#7C3AED',role:'Sales',pw:pw},
+    {name:'Philipp Indraczek',email:'p.indraczek@cloudunify.at',initials:'PI',color:'#059669',role:'Sales',pw:pw},
+    {name:'Maximilian Pelka',email:'max.pelka@cloudunify.at',initials:'MP',color:'#FF4013',role:'Sales',pw:pw}
+  ]);
+  // Pre-set Supabase credentials so auto-connect works
+  localStorage.setItem('sb_url','https://uessedqtmbthuuunyski.supabase.co');
+  localStorage.setItem('sb_key','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVlc3NlZHF0bWJ0aHV1dW55c2tpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNDk3MjgsImV4cCI6MjA5MzcyNTcyOH0.MIOAFzLhd1cN7M7sB6icI5iI4BwtY77lG7OkpzlVn8Y');
+  // Setup lock screen buttons
   var lb=document.getElementById('lbtn'); if(lb) lb.onclick=doLogin;
   var lp=document.getElementById('lpw'); if(lp) lp.onkeypress=function(e){if(e.key==='Enter')doLogin();};
   var rb=document.getElementById('rbtn'); if(rb) rb.onclick=doRegister;
   var le=document.getElementById('lemail'); if(le) le.onkeypress=function(e){if(e.key==='Enter')doLogin();};
   var sr=document.getElementById('showreg'); if(sr) sr.onclick=function(){document.getElementById('pwform').style.display='none';document.getElementById('rform').style.display='block';};
   var sl=document.getElementById('showlogin'); if(sl) sl.onclick=function(){document.getElementById('pwform').style.display='block';document.getElementById('rform').style.display='none';};
-  var user=getCurUser();
-  if(user){ unlock(); return; }
 });
 
 
