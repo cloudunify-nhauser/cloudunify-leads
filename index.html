@@ -264,14 +264,20 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="lsub">Cloudunify Sales · Passwortgeschützt</div>
 <div id="pwform">
 <div class="llbl">Plattform-Passwort</div>
-<input type="password" class="linp" id="pwinp" placeholder="Passwort eingeben...">
+<div style="position:relative">
+<input type="password" class="linp" id="pwinp" placeholder="Passwort eingeben..." style="margin-bottom:0;padding-right:44px">
+<span onclick="togglePW('pwinp',this)" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--muted);user-select:none">👁</span>
+</div>
 <div class="lerr" id="pwerr">Falsches Passwort</div>
 <button class="lbtn" id="pwbtn" onclick="checkPW()">Plattform öffnen</button>
 <div class="ldiv"><span>oder persönliches Konto</span></div>
 <div class="llbl">E-Mail</div>
 <input type="email" class="linp" id="lemail" placeholder="name@firma.at">
 <div class="llbl">Passwort</div>
-<input type="password" class="linp" id="lpw" placeholder="Passwort">
+<div style="position:relative">
+<input type="password" class="linp" id="lpw" placeholder="Passwort" style="margin-bottom:0;padding-right:44px">
+<span onclick="togglePW('lpw',this)" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--muted);user-select:none">👁</span>
+</div>
 <div class="lerr" id="lerr">E-Mail oder Passwort falsch</div>
 <button class="lbtn" id="lbtn" onclick="doLogin()">Anmelden</button>
 <div class="llink" id="showreg" onclick="document.getElementById("pwform").style.display="none";document.getElementById("rform").style.display="block"">Noch kein Konto? Jetzt registrieren</div>
@@ -282,7 +288,10 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="llbl">E-Mail</div>
 <input type="email" class="linp" id="rmail" placeholder="name@firma.at">
 <div class="llbl">Passwort (min. 8 Zeichen)</div>
-<input type="password" class="linp" id="rpw" placeholder="Passwort">
+<div style="position:relative">
+<input type="password" class="linp" id="rpw" placeholder="Passwort" style="margin-bottom:0;padding-right:44px">
+<span onclick="togglePW('rpw',this)" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--muted);user-select:none">👁</span>
+</div>
 <div class="llbl">Kürzel (z.B. MS)</div>
 <input type="text" class="linp" id="rinit" placeholder="MS" maxlength="3">
 <div class="lerr" id="rerr">Fehler</div>
@@ -451,6 +460,16 @@ var chartPipe = null;
 var PW_KEY='cu_pw', USERS_KEY='cu_users', CUR_KEY='cu_user';
 var DEF_PW='Cloudunify#Lead?26';
 
+function togglePW(id, btn){
+  var inp = document.getElementById(id);
+  if(inp.type === 'password'){
+    inp.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    inp.type = 'password';
+    btn.textContent = '👁';
+  }
+}
 function getPW(){ return localStorage.getItem(PW_KEY)||DEF_PW; }
 function getUsers(){ try{ return JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); }catch(e){ return []; } }
 function saveUsers(u){ localStorage.setItem(USERS_KEY,JSON.stringify(u)); }
@@ -531,9 +550,19 @@ function initApp(){
     var pw = btoa('#Sales26CU#');
     var changed = false;
     team.forEach(function(t){
-      var exists = false;
-      for(var i=0;i<users.length;i++){ if(users[i].email===t.email){exists=true;break;} }
-      if(!exists){ users.push(Object.assign({},t,{pw:pw})); changed=true; }
+      var found = false;
+      for(var i=0;i<users.length;i++){
+        if(users[i].email===t.email){
+          // Update password and info to ensure correct
+          users[i].pw = pw;
+          users[i].name = t.name;
+          users[i].initials = t.initials;
+          users[i].color = t.color;
+          users[i].role = t.role;
+          found = true; changed = true; break;
+        }
+      }
+      if(!found){ users.push(Object.assign({},t,{pw:pw})); changed=true; }
     });
     if(changed) saveUsers(users);
   })();
