@@ -1273,8 +1273,13 @@ async function startScan(){
     var seed = 'Generiere '+maxN+' realistische KMU aus Regionen: '+regs.join(', ')+', Branchen: '+inds.join(', ')+'. NUR JSON-Array:\n[{"name":"GmbH","city":"Stadt","state":"'+regs[0]+'","industry":"'+inds[0]+'","size":"51-200","website":"firma.at","email":"office@firma.at","phone":"+43 XXX","employees":80,"multiLocation":false,"founded":2005}]';
     var raw1 = await callAPI(seed, Math.max(2000,maxN*80), 'Firmenliste');
     var companies = [];
-    try{ var m1=raw1.match(/\[[\s\S]*\]/); companies=JSON.parse(m1[0]); }
-    catch(pe){ throw new Error('Parse-Fehler: '+pe.message); }
+    try{
+      var m1=raw1.match(/\[[\s\S]*\]/);
+      if(!m1){ console.error('[Scan] Keine JSON-Array in Firmenliste. Antwort:', raw1.substring(0,300)); throw new Error('Keine Firmenliste in API-Antwort gefunden'); }
+      companies=JSON.parse(m1[0]);
+      if(!Array.isArray(companies)||!companies.length) throw new Error('Leere Firmenliste');
+    }
+    catch(pe){ iLog('Firmenliste Fehler: '+pe.message,'err'); throw new Error('Firmenliste: '+pe.message); }
     iLog(companies.length+' Firmen generiert','ok');
     setProg(20,'Analysiere...');
     var CHUNK=10, chunks=[];
@@ -1500,29 +1505,41 @@ function modelId(m){ return m==='opus'?'claude-opus-4-7':'claude-sonnet-4-6'; }
 
 async function callAPI(prompt, maxTok, desc, system){
   var key=localStorage.getItem('cu_apikey');
-  if(!key) throw new Error('Kein API Key');
+  if(!key) throw new Error('Kein API Key - bitte in Einstellungen eintragen');
   var model=modelId(curModel());
-  console.log('[API] calling model:', model, 'prompt length:', prompt.length);
+  console.log('[API] Call:', desc, '| Model:', model, '| Tokens:', maxTok, '| Key vorhanden:', !!key);
   var body={model:model,max_tokens:maxTok||1000,messages:[{role:'user',content:prompt}]};
   if(system) body.system=system;
-  var resp=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify(body)
-  });
-  console.log('[API] response status:', resp.status);
-  var raw=await resp.text();
+  var resp;
+  try{
+    resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify(body)
+    });
+  } catch(netErr){
+    throw new Error('Netzwerk-Fehler: '+netErr.message);
+  }
+  console.log('[API] Status:', resp.status);
+  var raw;
+  try{ raw=await resp.text(); } catch(e){ throw new Error('Antwort konnte nicht gelesen werden'); }
   if(!resp.ok){
     var em='HTTP '+resp.status;
     try{em=JSON.parse(raw).error.message||em;}catch(e4){}
-    if(resp.status===401) throw new Error('API Key ungültig. Bitte in Einstellungen prüfen.');
+    if(resp.status===401) throw new Error('API Key ungültig - bitte in Einstellungen prüfen');
+    if(resp.status===429) throw new Error('API Rate Limit erreicht - kurz warten');
     throw new Error('API Fehler '+resp.status+': '+em);
   }
-  var d=JSON.parse(raw);
-  console.log('[API] response data:', d);
+  var d;
+  try{ d=JSON.parse(raw); } catch(pe){ console.error('[API] JSON Parse Fehler:', raw.substring(0,200)); throw new Error('API Antwort konnte nicht verarbeitet werden'); }
+  if(!d||!d.content||!d.content.length||!d.content[0]||!d.content[0].text){
+    console.error('[API] Unerwartete Antwortstruktur:', JSON.stringify(d).substring(0,300));
+    throw new Error('Leere Antwort von API erhalten');
+  }
   var res=d.content[0].text;
-  var inp=d.usage&&d.usage.input_tokens||0;
-  var out2=d.usage&&d.usage.output_tokens||0;
+  console.log('[API] Erfolg:', desc, '| Antwort-Länge:', res.length);
+  var inp=(d.usage&&d.usage.input_tokens)||0;
+  var out2=(d.usage&&d.usage.output_tokens)||0;
   trackTok(inp,out2,desc||'Call',curModel());
   return res;
 }
