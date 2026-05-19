@@ -6,7 +6,7 @@
 <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="expires" content="0">
-<title>Cloudunify · Lead Intelligence v2.3</title>
+<title>Cloudunify · Lead Intelligence v2.4</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -370,7 +370,7 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div id="at-charts" style="display:none"><div class="g2"><div class="card"><div class="cttl">Ø Chance nach ERP</div><div id="ach-erp"></div></div><div class="card"><div class="cttl">Chancen nach Branche</div><div id="ach-br"></div></div></div><div class="g2"><div class="card"><div class="cttl">Leads nach Region</div><div id="ach-land"></div></div><div class="card"><div class="cttl">ERP-Alter Verteilung</div><div id="ach-age"></div></div></div></div>
 </div>
 <div class="page" id="page-scraper">
-<div class="scho"><div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div><div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div><div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:11px">Oder KI-Scan:</div><div class="chips" id="regchips"><span class="chip on" data-v="Salzburg">Salzburg</span><span class="chip on" data-v="Oberösterreich">Oberösterreich</span><span class="chip" data-v="Tirol">Tirol</span><span class="chip" data-v="Wien">Wien</span><span class="chip" data-v="Steiermark">Steiermark</span><span class="chip" data-v="Bayern">Bayern</span><span class="chip" data-v="Deutschland">Deutschland</span></div><div class="chips" id="indchips" style="margin-top:5px"><span class="chip on" data-v="Metalltechnik">Metalltechnik</span><span class="chip on" data-v="Logistik">Logistik</span><span class="chip on" data-v="Produktion">Produktion</span><span class="chip on" data-v="Großhandel">Großhandel</span><span class="chip" data-v="Maschinenbau">Maschinenbau</span><span class="chip" data-v="Lebensmittel">Lebensmittel</span><span class="chip" data-v="Bau">Bau</span></div><div style="display:flex;align-items:center;gap:9px;margin-top:12px"><select id="scanmax" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:var(--r);padding:7px 11px;color:#fff;font-family:var(--font);font-size:12.5px;outline:none"><option value="10">10 Firmen</option><option value="25" selected>25 Firmen</option><option value="50">50 Firmen</option></select><select id="scanmin" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:var(--r);padding:7px 11px;color:#fff;font-family:var(--font);font-size:12.5px;outline:none"><option value="0">Alle Scores</option><option value="45" selected>Warm+ (≥45)</option><option value="70">Hot only (≥70)</option></select><button class="bscan" id="scanbtn">🚀 KI-Scan</button><button class="bscan" id="demobtn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25)">Demo laden</button></div></div>
+<div class="scho"><div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div><div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div><div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:11px">Oder KI-Scan:</div><div class="chips" id="regchips"><span class="chip on" data-v="Salzburg">Salzburg</span><span class="chip on" data-v="Oberösterreich">Oberösterreich</span><span class="chip" data-v="Tirol">Tirol</span><span class="chip" data-v="Wien">Wien</span><span class="chip" data-v="Steiermark">Steiermark</span><span class="chip" data-v="Bayern">Bayern</span><span class="chip" data-v="Deutschland">Deutschland</span></div><div class="chips" id="indchips" style="margin-top:5px"><span class="chip on" data-v="Metalltechnik">Metalltechnik</span><span class="chip on" data-v="Logistik">Logistik</span><span class="chip on" data-v="Produktion">Produktion</span><span class="chip on" data-v="Großhandel">Großhandel</span><span class="chip" data-v="Maschinenbau">Maschinenbau</span><span class="chip" data-v="Lebensmittel">Lebensmittel</span><span class="chip" data-v="Bau">Bau</span></div><div style="display:flex;align-items:center;gap:9px;margin-top:12px"><select id="scanmax" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="10">10 Firmen</option><option value="25" selected>25 Firmen</option><option value="50">50 Firmen</option></select><select id="scanmin" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="0">Alle Scores</option><option value="45" selected>Warm+ (≥45)</option><option value="70">Hot only (≥70)</option></select><button class="bscan" id="scanbtn">🚀 KI-Scan</button><button class="bscan" id="demobtn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25)">Demo laden</button></div></div>
 <div class="prog" id="prog"><div class="proghd"><h3 id="progttl">Scanne...</h3><span class="progpct" id="progpct">0%</span></div><div class="progbar"><div class="progfill" id="progfill"></div></div><div class="logbox" id="proglog"></div></div>
 <div class="ikpig" id="ikpig" style="display:none"><div class="ikpi itot"><div class="ikpiv" id="iktot">0</div><div class="ikpil">Analysiert</div></div><div class="ikpi ihot"><div class="ikpiv" id="ikhot">0</div><div class="ikpil">Hot ≥70</div></div><div class="ikpi iwarm"><div class="ikpiv" id="ikwarm">0</div><div class="ikpil">Warm 45-69</div></div><div class="ikpi icold"><div class="ikpiv" id="ikcold">0</div><div class="ikpil">Cold 20-44</div></div><div class="ikpi iavg"><div class="ikpiv" id="ikavg">-</div><div class="ikpil">Ø Score</div></div></div>
 <div id="iresults" style="display:none"><div class="tw"><div class="twh"><div style="font-size:13px;font-weight:700">KI-Ergebnisse</div><div style="display:flex;gap:8px"><button class="btn btng btnsm" id="icsv">↓ CSV</button><button class="btn btng btnsm" id="iclr">↺ Reset</button></div></div><div style="max-height:calc(100vh - 430px);overflow-y:auto"><table><thead><tr><th>#</th><th>Unternehmen</th><th>Ort</th><th>Branche</th><th style="text-align:center">Score</th><th>Kat.</th><th>Indikatoren</th><th></th></tr></thead><tbody id="itbody"></tbody></table></div></div></div>
@@ -628,7 +628,7 @@ function initApp(){
   var model = localStorage.getItem('cu_model') || 'sonnet';
   applyModel(model);
   var key = localStorage.getItem('cu_apikey');
-  if(key){ var ks = document.getElementById('keyst'); if(ks){ ks.textContent = '✓ Gespeichert'; ks.style.color = 'var(--ok)'; } var scb=document.getElementById('scanbtn'); if(scb) scb.disabled=false; var srpb=document.getElementById('scrapebtn'); if(srpb) srpb.disabled=false; }
+  if(key){ var ks = document.getElementById('keyst'); if(ks){ ks.textContent = '✓ Gespeichert'; ks.style.color = 'var(--ok)'; } var scb=document.getElementById('scanbtn'); if(scb) scb.disabled=false; var srpb=document.getElementById('scrapebtn'); if(srpb) srpb.disabled=false; var skeyEl=document.getElementById('skey'); if(skeyEl) skeyEl.value=key; }
   var sbUrl = localStorage.getItem('sb_url');
   var sbKey2 = localStorage.getItem('sb_key');
   if(sbUrl){ var el = document.getElementById('ssburl'); if(el) el.value = sbUrl; }
@@ -637,7 +637,7 @@ function initApp(){
   renderExcluded();
   updateImportCount();
   initCharts();
-  setTimeout(function(){ showToast('v2.3 geladen · Modell: '+modelId(curModel()).replace('claude-',''), 'ok'); }, 800);
+  setTimeout(function(){ showToast('v2.4 geladen · Modell: '+modelId(curModel()).replace('claude-',''), 'ok'); }, 800);
   renderLeads(getVis());
   renderPipeline('');
   renderTop();
@@ -859,16 +859,14 @@ function renderLeads(data){
     var detBtn = row.querySelector('button.btng[data-lid]');
     if(detBtn) detBtn.onclick = function(e){ e.stopPropagation(); openLead(lid); };
   });
-  tb.querySelectorAll('.add-to-pipe').forEach(function(btn){
-    btn.onclick = function(e){
-      e.stopPropagation();
-      addToPipeline(parseInt(btn.getAttribute('data-lid')));
-    };
-  });
-  tb.addEventListener('click',function(e){
-    var btn = e.target.closest('.report-btn');
-    if(btn) createLeadReport(parseInt(btn.getAttribute('data-lid')));
-  });
+  if(tb._clickHandler) tb.removeEventListener('click', tb._clickHandler);
+  tb._clickHandler = function(e){
+    var pipeBtn = e.target.closest('.add-to-pipe');
+    if(pipeBtn){ e.stopPropagation(); addToPipeline(parseInt(pipeBtn.getAttribute('data-lid'))); return; }
+    var repBtn = e.target.closest('.report-btn');
+    if(repBtn){ e.stopPropagation(); createLeadReport(parseInt(repBtn.getAttribute('data-lid'))); return; }
+  };
+  tb.addEventListener('click', tb._clickHandler);
 }
 
 function filterLeads(){
@@ -1242,7 +1240,7 @@ async function scrapeSingle(){
   if(!localStorage.getItem('cu_apikey')){ showToast('Kein API Key','err'); return; }
   showToast('Analysiere: '+url);
   try{
-    var prompt = 'Analysiere Website als B2B-ERP-Lead f\xfcr Odoo: '+url+'\nBewerte ERP-Potenzial. Antworte mit JSON:\n{"name":"Firma","website":"'+url+'","city":"Stadt","state":"Bundesland","industry":"Branche","size":"51-200","employees":80,"founded":2005,"email":"","phone":"","erp_lead_score":70,"cat":"warm","erp_fit":"ERP-Modernisierung","indicators":["I1","I2"],"pain_points":["P1"],"pitch":"Einstieg","keywords":["k1"],"legacy_system":null,"notes":"Begr\xfcndung"}';
+    var prompt = 'Analysiere Website als B2B-ERP-Lead f\xfcr Odoo: '+url+'\nBewerte ERP-Potenzial. Suche auch nach LinkedIn-Profil der Firma. Antworte mit JSON:\n{"name":"Firma","website":"'+url+'","linkedin_url":"https://linkedin.com/company/firma","city":"Stadt","state":"Bundesland","industry":"Branche","size":"51-200","employees":80,"founded":2005,"email":"","phone":"","erp_lead_score":70,"cat":"warm","erp_fit":"ERP-Modernisierung","indicators":["I1","I2"],"pain_points":["P1"],"pitch":"Einstieg","keywords":["k1"],"legacy_system":null,"notes":"Begr\xfcndung"}';
     var r = await callAPI(prompt, 800, 'Scraper: '+url);
     var m = r.match(/\{[\s\S]*\}/);
     if(!m) throw new Error('Kein JSON');
@@ -1274,7 +1272,7 @@ async function startScan(){
   setProg(0,'Firmenliste generieren...');
   iLog('Scan: '+regs.join(', ')+' | '+inds.join(', ')+' | max '+maxN);
   try{
-    var seed = 'Generiere '+maxN+' realistische KMU aus Regionen: '+regs.join(', ')+', Branchen: '+inds.join(', ')+'. NUR JSON-Array:\n[{"name":"GmbH","city":"Stadt","state":"'+regs[0]+'","industry":"'+inds[0]+'","size":"51-200","website":"firma.at","email":"office@firma.at","phone":"+43 XXX","employees":80,"multiLocation":false,"founded":2005}]';
+    var seed = 'Generiere '+maxN+' realistische KMU aus Regionen: '+regs.join(', ')+', Branchen: '+inds.join(', ')+'. NUR JSON-Array:\n[{"name":"GmbH","city":"Stadt","state":"'+regs[0]+'","industry":"'+inds[0]+'","size":"51-200","website":"firma.at","linkedin_url":"https://linkedin.com/company/firma","email":"office@firma.at","phone":"+43 XXX","employees":80,"multiLocation":false,"founded":2005}]';
     var raw1 = await callAPI(seed, Math.max(2000,maxN*80), 'Firmenliste');
     var companies = [];
     try{
@@ -1348,7 +1346,7 @@ function iRenderTable(){
     var sc=l.erp_lead_score||0;
     rows+='<tr>'
       +'<td style="color:var(--muted);font-size:11px">'+(i+1)+'</td>'
-      +'<td><div class="con">'+he(l.name)+'</div><div class="cos">'+he(l.email||'')+'</div></td>'
+      +'<td><div class="con">'+he(l.name)+'</div><div class="cos">'+he(l.email||'')+(l.linkedin_url?'<br><a href="'+he(l.linkedin_url)+'" target="_blank" style="color:var(--cu);font-size:10.5px;text-decoration:none">&#128279; LinkedIn</a>':'')+'</div></td>'
       +'<td style="font-size:12px">'+he(l.city||'')+'<br><span style="color:var(--muted);font-size:10.5px">'+he(l.state||'')+'</span></td>'
       +'<td style="font-size:12px">'+he(l.industry||'')+'<br><span style="color:var(--muted);font-size:10.5px">'+he(l.size||'')+'</span></td>'
       +'<td style="text-align:center"><div style="font-size:20px;font-weight:900;color:'+isc(sc)+'">'+sc+'</div><div style="height:2px;border-radius:2px;background:'+isc(sc)+';width:'+sc+'%;max-width:44px;margin:2px auto"></div></td>'
@@ -1608,7 +1606,6 @@ function saveKey(){
   if(!k || k.length<20){ showToast('Vollst\xe4ndigen Key eingeben','err'); return; }
   if(k.indexOf('ant')<0){ showToast('Kein g\xfcltiger Anthropic Key','err'); return; }
   localStorage.setItem('cu_apikey',k);
-  document.getElementById('skey').value='';
   var ks=document.getElementById('keyst'); if(ks){ ks.textContent='\u2713 Gespeichert'; ks.style.color='var(--ok)'; }
   document.getElementById('scanbtn').disabled=false;
   showToast('\u2713 API Key gespeichert','ok');
@@ -1829,7 +1826,7 @@ function addToPipeline(id){
   l.stage = 'Lead erkannt';
   l.pipeline_added_at = new Date().toISOString();
   l.pipeline_added_by = user ? (user.initials||'?') : '?';
-  if(!l.assign && user) l.assign = user.initials||'';
+  if(user) l.assign = user.initials||'';
   if(!l.activity_log) l.activity_log = [];
   l.activity_log.unshift({
     time: new Date().toLocaleString('de-AT',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'}),
