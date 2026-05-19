@@ -6,7 +6,7 @@
 <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="expires" content="0">
-<title>Cloudunify · Lead Intelligence v2.5</title>
+<title>Cloudunify · Lead Intelligence v2.6</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -639,7 +639,7 @@ function initApp(){
   updateImportCount();
   renderScanHistory();
   initCharts();
-  setTimeout(function(){ showToast('v2.5 geladen · Modell: '+modelId(curModel()).replace('claude-',''), 'ok'); }, 800);
+  setTimeout(function(){ showToast('v2.6 geladen · Modell: '+modelId(curModel()).replace('claude-',''), 'ok'); }, 800);
   renderLeads(getVis());
   renderPipeline('');
   renderTop();
@@ -828,9 +828,21 @@ function he(s){
 }
 function extractJSON(text){
   var t=text.replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
-  var start=t.indexOf('{'),end=t.lastIndexOf('}');
-  if(start>=0&&end>start){ try{ return JSON.parse(t.substring(start,end+1)); }catch(e){} }
-  try{ return JSON.parse(t); }catch(e2){ return null; }
+  // Direct parse
+  try{ return JSON.parse(t); }catch(e0){}
+  // Extract outermost { … }
+  var s=t.indexOf('{'),e=t.lastIndexOf('}');
+  if(s<0||e<=s) return null;
+  var raw=t.substring(s,e+1);
+  try{ return JSON.parse(raw); }catch(e1){}
+  // Fix unescaped newlines/tabs inside string values and remove trailing commas
+  var fixed=raw
+    .replace(/"(?:[^"\\]|\\.)*"/g,function(m){
+      return m.replace(/\n/g,'\\n').replace(/\r/g,'\\r').replace(/\t/g,'\\t');
+    })
+    .replace(/,\s*([}\]])/g,'$1');
+  try{ return JSON.parse(fixed); }catch(e2){}
+  return null;
 }
 function qualBadge(l){
   var pts=0, tips=[];
@@ -1262,9 +1274,8 @@ async function scrapeSingle(){
   try{
     var prompt = 'Analysiere Website als B2B-ERP-Lead f\xfcr Odoo: '+url+'\nBewerte ERP-Potenzial. Suche auch nach LinkedIn-Profil der Firma. Antworte mit JSON:\n{"name":"Firma","website":"'+url+'","linkedin_url":"https://linkedin.com/company/firma","city":"Stadt","state":"Bundesland","industry":"Branche","size":"51-200","employees":80,"founded":2005,"email":"","phone":"","erp_lead_score":70,"cat":"warm","erp_fit":"ERP-Modernisierung","indicators":["I1","I2"],"pain_points":["P1"],"pitch":"Einstieg","keywords":["k1"],"legacy_system":null,"notes":"Begr\xfcndung"}';
     var r = await callAPI(prompt, 800, 'Scraper: '+url);
-    var m = r.match(/\{[\s\S]*\}/);
-    if(!m) throw new Error('Kein JSON');
-    var l = JSON.parse(m[0]);
+    var l = extractJSON(r);
+    if(!l) throw new Error('Kein JSON in Antwort');
     l.id = 's'+Math.random().toString(36).substr(2,8);
     INTEL.unshift(l);
     showIntelResults();
@@ -1956,22 +1967,27 @@ async function createLeadReport(id){
       +'\nChancen-Score: '+l.win_chance+'%'
       +'\n\nGib zurück als JSON:\n'
       +'{"summary":"Executive Summary (3-4 Sätze)","erp_situation":"Aktuelle ERP-Situation und Schmerzpunkte","why_odoo":"Warum Odoo die perfekte Lösung wäre (konkret)","modules":["Modul1","Modul2","Modul3"],"pitch":"Gesprächseinstieg 2-3 Sätze","next_steps":["Schritt1","Schritt2","Schritt3"],"risks":["Risiko1","Risiko2"]}';
-    var r = await callAPI(prompt, 2000, 'Bericht: '+l.name, 'Antworte ausschließlich mit dem JSON-Objekt ohne zusätzlichen Text.');
+    var r = await callAPI(prompt, 2000, 'Bericht: '+l.name, 'Antworte NUR mit dem JSON-Objekt, kein Text davor oder danach, keine Codeblöcke.');
     var rep = extractJSON(r);
-    if(!rep) throw new Error('Kein JSON in Antwort erhalten');
-    var html = '<div class="mlbl">Executive Summary</div>'
-      +'<p style="font-size:13px;line-height:1.7;margin-bottom:12px">'+he(rep.summary||'')+'</p>'
-      +'<div class="mlbl">ERP-Situation &amp; Schmerzpunkte</div>'
-      +'<p style="font-size:13px;line-height:1.7;margin-bottom:12px">'+he(rep.erp_situation||'')+'</p>'
-      +'<div class="mlbl">Warum Odoo?</div>'
-      +'<p style="font-size:13px;line-height:1.7;margin-bottom:12px">'+he(rep.why_odoo||'')+'</p>'
-      +'<div class="mlbl">Empfohlene Odoo-Module</div>'
-      +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">'+(rep.modules||[]).map(function(m2){return '<span class="b bok">'+he(m2)+'</span>';}).join('')+'</div>'
-      +'<div class="pitchbox">'+he(rep.pitch||'')+'</div>'
-      +'<div class="mlbl">Nächste Schritte</div>'
-      +'<div style="margin-bottom:12px">'+(rep.next_steps||[]).map(function(s,i){return '<div style="display:flex;gap:8px;margin-bottom:5px;font-size:12.5px"><div style="width:20px;height:20px;border-radius:50%;background:var(--cu);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">'+(i+1)+'</div>'+he(s)+'</div>';}).join('')+'</div>'
-      +'<div class="mlbl">Risiken &amp; Einwände</div>'
-      +'<div>'+(rep.risks||[]).map(function(r2){return '<div style="font-size:12.5px;margin-bottom:4px">⚠ '+he(r2)+'</div>';}).join('')+'</div>';
+    var html;
+    if(rep){
+      html = '<div class="mlbl">Executive Summary</div>'
+        +'<p style="font-size:13px;line-height:1.7;margin-bottom:12px">'+he(rep.summary||'')+'</p>'
+        +'<div class="mlbl">ERP-Situation &amp; Schmerzpunkte</div>'
+        +'<p style="font-size:13px;line-height:1.7;margin-bottom:12px">'+he(rep.erp_situation||'')+'</p>'
+        +'<div class="mlbl">Warum Odoo?</div>'
+        +'<p style="font-size:13px;line-height:1.7;margin-bottom:12px">'+he(rep.why_odoo||'')+'</p>'
+        +'<div class="mlbl">Empfohlene Odoo-Module</div>'
+        +'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">'+(rep.modules||[]).map(function(m2){return '<span class="b bok">'+he(m2)+'</span>';}).join('')+'</div>'
+        +'<div class="pitchbox">'+he(rep.pitch||'')+'</div>'
+        +'<div class="mlbl">Nächste Schritte</div>'
+        +'<div style="margin-bottom:12px">'+(rep.next_steps||[]).map(function(s2,i){return '<div style="display:flex;gap:8px;margin-bottom:5px;font-size:12.5px"><div style="width:20px;height:20px;border-radius:50%;background:var(--cu);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">'+(i+1)+'</div>'+he(s2)+'</div>';}).join('')+'</div>'
+        +'<div class="mlbl">Risiken &amp; Einwände</div>'
+        +'<div>'+(rep.risks||[]).map(function(r2){return '<div style="font-size:12.5px;margin-bottom:4px">⚠ '+he(r2)+'</div>';}).join('')+'</div>';
+    } else {
+      // Fallback: render raw response as readable text
+      html = '<div style="font-size:12.5px;line-height:1.8;white-space:pre-wrap;font-family:var(--font)">'+he(r)+'</div>';
+    }
     document.getElementById('rcontent').innerHTML = html;
     document.getElementById('rcontent').style.display='block';
     document.getElementById('rloading').style.display='none';
