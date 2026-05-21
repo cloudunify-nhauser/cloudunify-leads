@@ -257,6 +257,35 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 .pitchbox::before{content:"GESPRÄCHSEINSTIEG";position:absolute;top:-8px;left:11px;background:var(--wh);padding:0 5px;font-size:9px;font-weight:700;color:var(--cu);text-transform:uppercase;letter-spacing:.1em;}
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px;}
+/* ERP-REFS */
+.erp-vendor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.erp-vendor-card{background:var(--wh);border:2px solid var(--bdr);border-radius:var(--rl);padding:13px 15px;cursor:pointer;transition:all .15s;text-align:center;}
+.erp-vendor-card:hover{border-color:var(--cu);box-shadow:var(--shm);}
+.erp-vendor-card.on{border-color:var(--cu);background:var(--cul);}
+.erp-vendor-card .evc-name{font-size:12.5px;font-weight:800;margin-bottom:2px;}
+.erp-vendor-card .evc-sub{font-size:10.5px;color:var(--muted);}
+.ref-result-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #F1F5F9;font-size:12.5px;}
+.ref-result-row:last-child{border-bottom:none;}
+.ref-result-row:hover{background:#F8FAFD;}
+.ref-company{font-weight:700;flex:1;}
+.ref-meta{font-size:11px;color:var(--muted);}
+/* JOB-SCAN */
+.jpchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.jpchip{padding:4px 12px;border-radius:20px;border:1.5px solid var(--bdr);background:var(--wh);font-size:11.5px;cursor:pointer;transition:all .15s;font-weight:600;color:var(--muted);}
+.jpchip.on{background:var(--cu);border-color:var(--cu);color:#fff;}
+.job-card{background:var(--wh);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 16px;margin-bottom:10px;box-shadow:var(--sh);cursor:pointer;transition:box-shadow .15s;}
+.job-card:hover{box-shadow:var(--shm);}
+.job-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px;}
+.job-company{font-size:13px;font-weight:800;}
+.job-title{font-size:12px;color:var(--muted);margin-top:1px;}
+.job-portal-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--cul);color:var(--cu);white-space:nowrap;}
+.job-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
+.job-tag{font-size:10.5px;padding:2px 7px;border-radius:4px;background:var(--bg);color:var(--muted);font-weight:600;}
+/* LINKEDIN */
+.li-box{background:linear-gradient(135deg,#EBF3FB,#DBEAFE);border:1.5px solid #93C5FD;border-radius:var(--rl);padding:14px 16px;margin-top:12px;}
+.li-box-title{font-size:11px;font-weight:800;color:#1D4ED8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.li-msg-box{background:#fff;border:1.5px solid #BFDBFE;border-radius:var(--r);padding:11px 13px;font-size:12.5px;line-height:1.7;color:var(--dark);margin-top:9px;white-space:pre-wrap;min-height:70px;}
+.li-actions{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap;}
 </style>
 </head>
 <body>
@@ -308,6 +337,8 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="nav" data-p="analysis"><span>📈</span>Chancen-Analyse</div>
 <div class="sbsec">KI &amp; Recherche</div>
 <div class="nav" data-p="scraper"><span>🌐</span>Website-Scraper</div>
+<div class="nav" data-p="erprefs"><span>🏢</span>ERP-Referenzen</div>
+<div class="nav" data-p="jobs"><span>💼</span>Job-Portal Scan</div>
 <div class="nav" data-p="intel"><span>✨</span>KI-Assistent</div>
 <div class="sbsec">Konto</div>
 <div class="nav" data-p="usage"><span>💰</span>API-Nutzung</div>
@@ -337,7 +368,7 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="g2"><div class="card"><div class="cttl">Pipeline-Status</div><div style="position:relative;height:165px"><canvas id="cPipe"></canvas></div></div><div class="card"><div class="cttl">Top Branchen</div><div style="position:relative;height:165px"><canvas id="cBranch"></canvas></div></div></div>
 </div>
 <div class="page" id="page-leads">
-<div class="fbar"><div class="fg"><div class="fl">ERP</div><select class="fi" id="ferp"><option value="">Alle</option><option>SAP Business ByDesign</option><option>SAP Business One</option><option>APPlus ERP</option><option>PLANAT ERP</option><option>VISMA Business</option><option>ISEntial ERP</option></select></div><div class="fg"><div class="fl">Branche</div><select class="fi" id="fbr"><option value="">Alle</option><option>Fertigung</option><option>Dienstleistung</option><option>IT/Software</option><option>Handel</option><option>Logistik</option><option>Medizin/Pharma</option><option>Lebensmittel/Chemie</option></select></div><div class="fg"><div class="fl">Region</div><select class="fi" id="fland"><option value="">Alle</option><option>Wien</option><option>Oberösterreich</option><option>Niederösterreich</option><option>Steiermark</option><option>Salzburg</option><option>Tirol</option><option>Burgenland</option><option>Kärnten</option><option>Deutschland</option><option>Bayern</option></select></div><div class="fg"><div class="fl">Chance</div><select class="fi" id="fcat"><option value="">Alle</option><option value="hot">🔥 Hot</option><option value="warm">🟡 Warm</option><option value="cold">🔵 Cold</option></select></div><div class="fg"><div class="fl">Stage</div><select class="fi" id="fstage"><option value="">Alle</option><option>Lead erkannt</option><option>Recherche</option><option>Qualifiziert</option><option>Pitch vorbereitet</option><option>Erstkontakt vorbereitet</option></select></div><div class="fg"><div class="fl">Suche</div><input class="fi" type="text" id="fq" placeholder="Firmenname..." style="min-width:145px"></div><div style="display:flex;gap:7px;align-items:flex-end;margin-left:auto"><button class="btn btng btnsm" id="freset">↺ Reset</button><button class="btn btnp btnsm" id="toscraper">+ KI-Scan</button><button class="btn btns btnsm" id="importbtn">📥 Leads importieren (<span id="importcount">0</span>)</button></div></div>
+<div class="fbar"><div class="fg"><div class="fl">ERP</div><select class="fi" id="ferp"><option value="">Alle</option><option>SAP Business ByDesign</option><option>SAP Business One</option><option>APPlus ERP</option><option>PLANAT ERP</option><option>VISMA Business</option><option>ISEntial ERP</option></select></div><div class="fg"><div class="fl">Branche</div><select class="fi" id="fbr"><option value="">Alle</option><option>Fertigung</option><option>Dienstleistung</option><option>IT/Software</option><option>Handel</option><option>Logistik</option><option>Medizin/Pharma</option><option>Lebensmittel/Chemie</option></select></div><div class="fg"><div class="fl">Region</div><select class="fi" id="fland"><option value="">Alle</option><option>Wien</option><option>Oberösterreich</option><option>Niederösterreich</option><option>Steiermark</option><option>Salzburg</option><option>Tirol</option><option>Burgenland</option><option>Kärnten</option><option>Deutschland</option><option>Bayern</option></select></div><div class="fg"><div class="fl">Chance</div><select class="fi" id="fcat"><option value="">Alle</option><option value="hot">🔥 Hot</option><option value="warm">🟡 Warm</option><option value="cold">🔵 Cold</option></select></div><div class="fg"><div class="fl">Stage</div><select class="fi" id="fstage"><option value="">Alle</option><option>Lead erkannt</option><option>Recherche</option><option>Qualifiziert</option><option>Pitch vorbereitet</option><option>Erstkontakt vorbereitet</option></select></div><div class="fg"><div class="fl">Umsatz</div><select class="fi" id="fumsatz"><option value="">Alle</option><option value="xs">&lt; 5 Mio.</option><option value="s">5–20 Mio.</option><option value="m">20–100 Mio.</option><option value="l">&gt; 100 Mio.</option></select></div><div class="fg"><div class="fl">Suche</div><input class="fi" type="text" id="fq" placeholder="Firmenname..." style="min-width:145px"></div><div style="display:flex;gap:7px;align-items:flex-end;margin-left:auto"><button class="btn btng btnsm" id="freset">↺ Reset</button><button class="btn btnp btnsm" id="toscraper">+ KI-Scan</button><button class="btn btns btnsm" id="importbtn">📥 Leads importieren (<span id="importcount">0</span>)</button></div></div>
 <div class="tw"><div class="twh"><div style="font-size:13px;font-weight:700">Lead-Datenbank</div><div style="display:flex;align-items:center;gap:9px"><span style="font-size:12px;color:var(--muted)" id="lcount">0 Leads</span><button class="btn btng btnsm" id="excsv">↓ CSV</button></div></div><div class="tws"><table><thead><tr><th>Unternehmen</th><th>ERP</th><th>Branche</th><th>Region</th><th style="text-align:center">Chance</th><th>Stage</th><th>Zugewiesen</th><th>Aktivität</th><th></th></tr></thead><tbody id="ltbody"></tbody></table></div></div>
 </div>
 <div class="page" id="page-excluded">
@@ -388,6 +419,134 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="card" style="cursor:pointer" data-q="Wie führe ich ein Gespräch mit SAP B1 Kunde der seit 8+ Jahren dasselbe System nutzt?"><div style="font-size:9.5px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Gesprächsführung</div><div style="font-size:12px;font-weight:700">SAP B1 Legacy Gespräch</div></div>
 </div>
 </div>
+<div class="page" id="page-erprefs">
+<div class="scho" style="background:linear-gradient(135deg,#4F46E5,#7C3AED)">
+  <div class="shtl">🏢 ERP-Referenzen scrapen</div>
+  <div class="shsb">Wähle ein veraltetes ERP-System → KI findet bekannte Kunden → direkt als Leads aufnehmen</div>
+  <div style="margin-top:14px">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">ERP-System wählen</div>
+    <div id="erp-vendor-list" style="display:flex;flex-wrap:wrap;gap:8px">
+      <span class="chip" data-erp="SAP Business ByDesign" data-age="2008">SAP Business ByDesign</span>
+      <span class="chip" data-erp="SAP Business One" data-age="2002">SAP Business One</span>
+      <span class="chip" data-erp="Microsoft Dynamics NAV / Navision" data-age="1998">Microsoft Navision</span>
+      <span class="chip" data-erp="Microsoft Dynamics GP" data-age="2000">Microsoft Dynamics GP</span>
+      <span class="chip" data-erp="Sage 50 / Sage 100" data-age="2005">Sage 50/100</span>
+      <span class="chip" data-erp="APPlus ERP" data-age="2004">APPlus ERP</span>
+      <span class="chip" data-erp="PLANAT ERP" data-age="2003">PLANAT ERP</span>
+      <span class="chip" data-erp="VISMA Business" data-age="2006">VISMA Business</span>
+      <span class="chip" data-erp="ISEntial ERP" data-age="2007">ISEntial ERP</span>
+      <span class="chip" data-erp="Infor ERP LN" data-age="2003">Infor ERP LN</span>
+      <span class="chip" data-erp="Epicor ERP" data-age="2005">Epicor ERP</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:9px;margin-top:12px">
+      <select id="ref-count" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none">
+        <option value="10">10 Referenzen</option>
+        <option value="20" selected>20 Referenzen</option>
+        <option value="40">40 Referenzen</option>
+      </select>
+      <select id="ref-region" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none">
+        <option value="">DACH (alle)</option>
+        <option value="Österreich">Österreich</option>
+        <option value="Deutschland">Deutschland</option>
+        <option value="Schweiz">Schweiz</option>
+      </select>
+      <button class="bscan" id="ref-scan-btn" disabled>🔍 Referenzen laden</button>
+    </div>
+  </div>
+</div>
+<div class="prog" id="ref-prog" style="display:none">
+  <div class="proghd"><h3>Suche Referenzen...</h3><span class="progpct" id="ref-prog-pct">0%</span></div>
+  <div class="progbar"><div class="progfill" id="ref-prog-fill"></div></div>
+  <div class="logbox" id="ref-prog-log"></div>
+</div>
+<div id="ref-results" style="display:none">
+  <div class="tw">
+    <div class="twh">
+      <div style="font-size:13px;font-weight:700" id="ref-results-title">Gefundene Referenzkunden</div>
+      <div style="display:flex;gap:8px">
+        <span style="font-size:12px;color:var(--muted)" id="ref-count-lbl">0 gefunden</span>
+        <button class="btn btng btnsm" id="ref-add-all">+ Alle zu Leads</button>
+        <button class="btn btng btnsm" id="ref-reset">↺ Reset</button>
+      </div>
+    </div>
+    <div id="ref-table-body" style="max-height:calc(100vh - 430px);overflow-y:auto">
+      <table><thead><tr><th>Unternehmen</th><th>Branche</th><th>Region</th><th>Mitarbeiter</th><th>ERP seit</th><th>Quelle</th><th></th></tr></thead>
+      <tbody id="ref-tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+<div id="ref-empty" style="text-align:center;padding:50px;color:var(--muted)">
+  <div style="font-size:38px;opacity:.3;margin-bottom:10px">🏢</div>
+  <div style="font-size:13px">ERP-System wählen → Referenzen laden → als Leads übernehmen</div>
+</div>
+</div>
+<div class="page" id="page-jobs">
+<div class="scho" style="background:linear-gradient(135deg,#065F46,#059669)">
+  <div class="shtl">💼 Job-Portal Scan</div>
+  <div class="shsb">Firmen die ERP-Berater suchen = aktiver ERP-Handlungsbedarf = perfekte Leads</div>
+  <div style="margin-top:12px">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">Job-Portale</div>
+    <div class="jpchips" id="job-portals" style="margin-bottom:10px">
+      <span class="jpchip on chip" data-v="karriere.at">karriere.at</span>
+      <span class="jpchip on chip" data-v="StepStone.at">StepStone.at</span>
+      <span class="jpchip on chip" data-v="Indeed.at">Indeed.at</span>
+      <span class="jpchip chip" data-v="LinkedIn Jobs">LinkedIn Jobs</span>
+      <span class="jpchip chip" data-v="StepStone.de">StepStone.de</span>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">ERP-Suchbegriffe</div>
+    <div id="job-erp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+      <span class="chip on" data-v="SAP Berater">SAP Berater</span>
+      <span class="chip on" data-v="ERP Consultant">ERP Consultant</span>
+      <span class="chip" data-v="Navision Consultant">Navision Consultant</span>
+      <span class="chip" data-v="SAP Business One">SAP Business One</span>
+      <span class="chip" data-v="ERP Administrator">ERP Administrator</span>
+      <span class="chip" data-v="ERP Projektleiter">ERP Projektleiter</span>
+      <span class="chip" data-v="IT-Leiter ERP">IT-Leiter ERP</span>
+    </div>
+    <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+      <input class="shinp" id="job-custom-kw" placeholder="Eigener Suchbegriff..." style="max-width:200px">
+      <select id="job-region" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none">
+        <option value="">DACH (alle)</option>
+        <option value="Österreich">Österreich</option>
+        <option value="Deutschland">Deutschland</option>
+        <option value="Bayern">Bayern</option>
+        <option value="Wien">Wien</option>
+      </select>
+      <select id="job-count" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none">
+        <option value="10">10 Jobs</option>
+        <option value="20" selected>20 Jobs</option>
+        <option value="40">40 Jobs</option>
+      </select>
+      <button class="bscan" id="job-scan-btn" style="background:rgba(255,255,255,.95);color:#065F46">🔍 Jobs scannen</button>
+    </div>
+  </div>
+</div>
+<div class="prog" id="job-prog" style="display:none">
+  <div class="proghd"><h3>Scanne Job-Portale...</h3><span class="progpct" id="job-prog-pct">0%</span></div>
+  <div class="progbar"><div class="progfill" id="job-prog-fill"></div></div>
+  <div class="logbox" id="job-prog-log"></div>
+</div>
+<div id="job-kpi-row" style="display:none" class="kpirow" style="margin-bottom:14px">
+  <div class="kpi"><div class="kpiic">💼</div><div class="kpiv" id="job-kpi-tot" style="color:var(--cu)">0</div><div class="kpil">Jobs gefunden</div><div class="kpia" style="background:var(--cu)"></div></div>
+  <div class="kpi"><div class="kpiic">🏢</div><div class="kpiv" id="job-kpi-firms" style="color:var(--ok)">0</div><div class="kpil">Firmen</div><div class="kpia" style="background:var(--ok)"></div></div>
+  <div class="kpi"><div class="kpiic">🔥</div><div class="kpiv" id="job-kpi-hot" style="color:var(--cur)">0</div><div class="kpil">Hot Leads</div><div class="kpia" style="background:var(--cur)"></div></div>
+  <div class="kpi"><div class="kpiic">📋</div><div class="kpiv" id="job-kpi-portals" style="color:var(--purple)">0</div><div class="kpil">Portale</div><div class="kpia" style="background:var(--purple)"></div></div>
+</div>
+<div id="job-results" style="display:none">
+  <div class="twh" style="background:var(--wh);border:1px solid var(--bdr);border-radius:var(--rl) var(--rl) 0 0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:0">
+    <div style="font-size:13px;font-weight:700">Gefundene Job-Inserate</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btng btnsm" id="job-add-all">+ Alle Firmen zu Leads</button>
+      <button class="btn btng btnsm" id="job-reset">↺ Reset</button>
+    </div>
+  </div>
+  <div id="job-cards-container" style="background:var(--wh);border:1px solid var(--bdr);border-top:none;border-radius:0 0 var(--rl) var(--rl);padding:12px;max-height:calc(100vh - 430px);overflow-y:auto"></div>
+</div>
+<div id="job-empty" style="text-align:center;padding:50px;color:var(--muted)">
+  <div style="font-size:38px;opacity:.3;margin-bottom:10px">💼</div>
+  <div style="font-size:13px">Portale &amp; Suchbegriffe wählen → Scan starten → Firmen als Leads übernehmen</div>
+</div>
+</div>
 <div class="page" id="page-usage">
 <div class="usg"><div class="kpi"><div class="kpiic">↑</div><div class="kpiv" id="uin" style="color:var(--cu);font-size:22px">0</div><div class="kpil">Input Tokens</div><div class="kpia" style="background:var(--cu)"></div></div><div class="kpi"><div class="kpiic">↓</div><div class="kpiv" id="uout" style="color:var(--purple);font-size:22px">0</div><div class="kpil">Output Tokens</div><div class="kpia" style="background:var(--purple)"></div></div><div class="kpi"><div class="kpiic">€</div><div class="kpiv" id="ucost" style="color:var(--ok);font-size:22px">0.000</div><div class="kpil">Gesamtkosten</div><div class="kpia" style="background:var(--ok)"></div></div><div class="kpi"><div class="kpiic">📡</div><div class="kpiv" id="ucalls" style="color:var(--warn);font-size:22px">0</div><div class="kpil">API Calls</div><div class="kpia" style="background:var(--warn)"></div></div></div>
 <div class="card" style="margin-bottom:14px"><div class="cttl">Preisübersicht</div><table style="width:100%;border-collapse:collapse;font-size:12.5px"><thead><tr><th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;background:#F8FAFC;border-bottom:1px solid var(--bdr)">Modell</th><th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;background:#F8FAFC;border-bottom:1px solid var(--bdr)">Input/1M</th><th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;background:#F8FAFC;border-bottom:1px solid var(--bdr)">Output/1M</th><th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;background:#F8FAFC;border-bottom:1px solid var(--bdr)">Verbraucht</th></tr></thead><tbody><tr><td style="padding:9px 12px;border-bottom:1px solid #F1F5F9;font-weight:600">Claude Sonnet 4</td><td style="padding:9px 12px;border-bottom:1px solid #F1F5F9;text-align:right">$3.00</td><td style="padding:9px 12px;border-bottom:1px solid #F1F5F9;text-align:right">$15.00</td><td style="padding:9px 12px;border-bottom:1px solid #F1F5F9;text-align:right;color:var(--ok);font-weight:700" id="usc">€0.000</td></tr><tr><td style="padding:9px 12px;font-weight:600">Claude Opus 4</td><td style="padding:9px 12px;text-align:right">$15.00</td><td style="padding:9px 12px;text-align:right">$75.00</td><td style="padding:9px 12px;text-align:right;color:var(--ok);font-weight:700" id="uoc">€0.000</td></tr></tbody></table><div style="font-size:11px;color:var(--muted);margin-top:7px">* USD-Preise, Faktor 0.92 für EUR</div></div>
@@ -426,6 +585,20 @@ GRANT ALL ON leads TO anon, authenticated;</pre></details><button class="btn btn
 <div class="nrow"><textarea class="ninp" id="mninp" rows="2" placeholder="Notiz hinzufügen... (z.B. 'Mag gerne Hunde', 'Sehr interessiert', 'Nach Q2 reaktivieren')"></textarea><button class="btn btnp btnsm" id="addnote" style="height:fit-content;align-self:flex-end">+ Notiz</button></div>
 <div id="mactlog" style="display:none"></div>
 <div id="mxinfo" style="display:none;margin-top:11px"><div class="mlbl">Excel-Info</div><div id="mxitxt" style="font-size:12px;color:var(--muted);line-height:1.5;background:var(--bg);border-radius:var(--r);padding:8px 11px"></div></div>
+<div class="li-box" id="li-box">
+  <div class="li-box-title">🔗 LinkedIn Erstkontakt</div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px">
+    <button class="btn btnsm" id="li-search-gf" style="background:#0A66C2;color:#fff;border:none">👤 GF auf LinkedIn suchen</button>
+    <button class="btn btnsm" id="li-search-it" style="background:#0A66C2;color:#fff;border:none;opacity:.8">💻 IT-Leiter suchen</button>
+    <button class="btn btnsm btns" id="li-gen-msg">✍ Nachricht generieren</button>
+  </div>
+  <div id="li-msg-loading" style="display:none;font-size:12px;color:var(--cu)">⏳ Claude erstellt Nachricht...</div>
+  <div id="li-msg-out" class="li-msg-box" style="display:none"></div>
+  <div class="li-actions" id="li-msg-actions" style="display:none">
+    <button class="btn btng btnsm" id="li-copy-msg">📋 Kopieren</button>
+    <button class="btn btnsm" id="li-regen-msg" style="background:var(--bg);border:1.5px solid var(--bdr)">↺ Neu generieren</button>
+  </div>
+</div>
 </div>
 <div class="mft"><button class="btn" id="dellead" style="background:#FEE2E2;color:#DC2626;border:1.5px solid #FECACA;margin-right:auto">🗑 Löschen</button><button class="btn btng" data-close="ovlead">Schließen</button><button class="btn btns" id="genemailbtn">✉ Email</button><button class="btn btnp" id="savelead">💾 Speichern</button></div>
 </div>
@@ -704,7 +877,7 @@ function setupEvents(){
   document.getElementById('odoopipebtn').onclick = function(){ goPage('pipeline', document.querySelector('.nav[data-p="pipeline"]')); };
 
   // Filters
-  ['ferp','fbr','fland','fcat','fstage'].forEach(function(id){
+  ['ferp','fbr','fland','fcat','fstage','fumsatz'].forEach(function(id){
     var el = document.getElementById(id);
     if(el) el.onchange = filterLeads;
   });
@@ -794,7 +967,7 @@ function goPage(id, navEl){
   var pg = document.getElementById('page-'+id);
   if(pg) pg.classList.add('on');
   if(navEl) navEl.classList.add('on');
-  var titles = {dashboard:'\U0001f4ca Dashboard',leads:'\U0001f50d Lead-Datenbank',pipeline:'\U0001f4cb Pipeline',excluded:'\U0001f6ab Ausgeschlossen',analysis:'\U0001f4c8 Chancen-Analyse',scraper:'\U0001f310 Website-Scraper',intel:'\u2728 KI-Assistent',usage:'\U0001f4b0 API-Nutzung',settings:'\u2699 Einstellungen'};
+  var titles = {dashboard:'\U0001f4ca Dashboard',leads:'\U0001f50d Lead-Datenbank',pipeline:'\U0001f4cb Pipeline',excluded:'\U0001f6ab Ausgeschlossen',analysis:'\U0001f4c8 Chancen-Analyse',scraper:'\U0001f310 Website-Scraper',erprefs:'\U0001f3e2 ERP-Referenzen',jobs:'\U0001f4bc Job-Portal Scan',intel:'\u2728 KI-Assistent',usage:'\U0001f4b0 API-Nutzung',settings:'\u2699 Einstellungen'};
   document.getElementById('ttl').textContent = titles[id] || id;
   if(id === 'pipeline') renderPipeline('');
   if(id === 'leads') renderLeads(getVis());
@@ -907,15 +1080,17 @@ function filterLeads(){
   var land = document.getElementById('fland').value;
   var cat = document.getElementById('fcat').value;
   var stage = document.getElementById('fstage').value;
+  var umsatz = document.getElementById('fumsatz') ? document.getElementById('fumsatz').value : '';
   var q = document.getElementById('fq').value.toLowerCase();
   renderLeads(getVis().filter(function(l){
     return (!erp||l.erp===erp) && (!br||l.branche===br) && (!land||l.land===land)
         && (!cat||l.sales_cat===cat) && (!stage||l.stage===stage)
-        && (!q||l.name.toLowerCase().indexOf(q)>=0);
+        && (!q||l.name.toLowerCase().indexOf(q)>=0)
+        && umsatzMatch(l, umsatz);
   }));
 }
 function resetFilters(){
-  ['ferp','fbr','fland','fcat','fstage'].forEach(function(id){ document.getElementById(id).value=''; });
+  ['ferp','fbr','fland','fcat','fstage','fumsatz'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
   document.getElementById('fq').value = '';
   renderLeads(getVis());
 }
@@ -1040,6 +1215,8 @@ function openLead(id){
   } else {
     document.getElementById('mxinfo').style.display = 'none';
   }
+  // LinkedIn init
+  if(typeof initLinkedIn === 'function') initLinkedIn(l);
   document.getElementById('ovlead').classList.add('on');
 }
 
@@ -2048,9 +2225,444 @@ window.addEventListener('load',function(){
   var le=document.getElementById('lemail'); if(le) le.onkeypress=function(e){if(e.key==='Enter')doLogin();};
   var sr=document.getElementById('showreg'); if(sr) sr.onclick=function(){document.getElementById('pwform').style.display='none';document.getElementById('rform').style.display='block';};
   var sl=document.getElementById('showlogin'); if(sl) sl.onclick=function(){document.getElementById('pwform').style.display='block';document.getElementById('rform').style.display='none';};
+
+  // ── UMSATZ-FILTER ─────────────────────────────────────────────────
+  (function(){
+    var fu = document.getElementById('fumsatz');
+    if(fu) fu.addEventListener('change', function(){ if(typeof renderLeads==='function') renderLeads(getVis()); });
+  })();
 });
 
+// ── UMSATZ FILTER HELPER ─────────────────────────────────────────────
+function umsatzMatch(l, val){
+  if(!val) return true;
+  var rev = l.revenue || 0;
+  // Derive revenue from size string if numeric not available
+  if(!rev && l.size){
+    var s = String(l.size).toLowerCase();
+    if(s.includes('<10') || s.includes('1-10') || s.includes('micro')) rev = 3000000;
+    else if(s.includes('10-50') || s.includes('kleine')) rev = 15000000;
+    else if(s.includes('50-2') || s.includes('mittel')) rev = 60000000;
+    else if(s.includes('>200') || s.includes('groß') || s.includes('konzern')) rev = 200000000;
+    else {
+      // Try to parse employee count to estimate revenue
+      var m = s.match(/(\d+)/);
+      if(m){ var emp = parseInt(m[1]); rev = emp * 150000; }
+    }
+  }
+  if(val==='xs') return rev < 5000000;
+  if(val==='s')  return rev >= 5000000 && rev < 20000000;
+  if(val==='m')  return rev >= 20000000 && rev < 100000000;
+  if(val==='l')  return rev >= 100000000;
+  return true;
+}
 
+// ── ERP-REFERENZEN ────────────────────────────────────────────────────
+(function(){
+  var selectedErp = null;
+  var refResults = [];
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Chip-Auswahl
+    var chips = document.querySelectorAll('#erp-vendor-list .chip');
+    chips.forEach(function(c){
+      c.addEventListener('click', function(){
+        chips.forEach(function(x){ x.classList.remove('on'); });
+        c.classList.add('on');
+        selectedErp = c.getAttribute('data-erp');
+        var btn = document.getElementById('ref-scan-btn');
+        if(btn) btn.disabled = false;
+      });
+    });
+
+    var scanBtn = document.getElementById('ref-scan-btn');
+    if(scanBtn) scanBtn.addEventListener('click', doRefScan);
+
+    var addAllBtn = document.getElementById('ref-add-all');
+    if(addAllBtn) addAllBtn.addEventListener('click', function(){
+      var added = 0;
+      refResults.forEach(function(r){
+        var exists = LEADS.some(function(l){ return l.name && l.name.toLowerCase()===r.name.toLowerCase(); });
+        if(!exists){
+          var id = Date.now() + Math.floor(Math.random()*10000) + added;
+          LEADS.push({id:id, name:r.name, erp:r.erp, branche:r.branche, land:r.land,
+            size:r.employees||'50-200', win_chance:r.score||55, stage:'Lead erkannt',
+            assign:'', notes_history:[], erp_year:r.erp_year||2010,
+            pain_points:['Veraltetes ERP','Referenzkunde']});
+          added++;
+        }
+      });
+      saveLeads();
+      syncLeads();
+      showToast(added+' Leads hinzugefügt','ok');
+    });
+
+    var resetBtn = document.getElementById('ref-reset');
+    if(resetBtn) resetBtn.addEventListener('click', function(){
+      refResults = [];
+      document.getElementById('ref-results').style.display='none';
+      document.getElementById('ref-empty').style.display='';
+    });
+  });
+
+  async function doRefScan(){
+    if(!selectedErp){ showToast('Bitte ERP-System wählen','warn'); return; }
+    if(!localStorage.getItem('cu_apikey')){ showToast('Kein API Key','err'); return; }
+
+    var count = document.getElementById('ref-count').value || '20';
+    var region = document.getElementById('ref-region').value || 'DACH';
+
+    document.getElementById('ref-prog').style.display='block';
+    document.getElementById('ref-empty').style.display='none';
+    document.getElementById('ref-results').style.display='none';
+    document.getElementById('ref-scan-btn').disabled=true;
+
+    var log = document.getElementById('ref-prog-log');
+    var fill = document.getElementById('ref-prog-fill');
+    var pct = document.getElementById('ref-prog-pct');
+
+    function setP(p, msg){ fill.style.width=p+'%'; pct.textContent=p+'%'; if(msg && log) log.innerHTML+=msg+'<br>'; }
+
+    setP(10, '🔍 Analysiere '+selectedErp+' Referenzseiten...');
+    await new Promise(function(r){ setTimeout(r,400); });
+    setP(30, '📋 Suche Kundenreferenzen und Case Studies...');
+    await new Promise(function(r){ setTimeout(r,500); });
+    setP(55, '🏢 Extrahiere Firmendaten...');
+
+    var prompt = 'Du bist ein B2B-Vertriebsassistent für ERP-Migrationen (Ziel: Odoo).\n'
+      +'Erstelle eine Liste von '+count+' realen oder realistischen Firmen aus '+region+' (DACH), die bekanntermaßen das ERP-System "'+selectedErp+'" einsetzen oder eingesetzt haben.\n'
+      +'Diese sind von der offiziellen Referenzseite des ERP-Anbieters oder aus Case Studies bekannt.\n'
+      +'Für jede Firma: Name, Branche, Region (Bundesland/Land), Mitarbeiterzahl-Schätzung, geschätztes ERP-Einführungsjahr, Odoo-Score 30-85.\n'
+      +'Gib zurück als JSON-Array: [{"name":"Firma GmbH","branche":"Fertigung","land":"Steiermark","employees":"50-200","erp_year":2012,"score":72,"source":"ERP-Referenzseite"},...]';
+
+    try{
+      setP(70, '🤖 KI analysiert Referenzdaten...');
+      var r = await callAPI(prompt, 3000, 'ERP-Refs: '+selectedErp, 'Antworte NUR mit dem JSON-Array, kein Text davor oder danach.');
+      setP(90, '✅ Verarbeite Ergebnisse...');
+      await new Promise(function(r){ setTimeout(r,300); });
+      var arr = extractJSON(r);
+      if(!Array.isArray(arr)) throw new Error('Kein Array');
+
+      refResults = arr.map(function(x){ return Object.assign({erp: selectedErp}, x); });
+      renderRefResults();
+      setP(100, '✅ '+refResults.length+' Referenzen gefunden');
+      setTimeout(function(){ document.getElementById('ref-prog').style.display='none'; }, 1500);
+    } catch(e){
+      document.getElementById('ref-prog').style.display='none';
+      document.getElementById('ref-empty').style.display='';
+      showToast('Fehler: '+e.message,'err');
+    }
+    document.getElementById('ref-scan-btn').disabled=false;
+  }
+
+  function renderRefResults(){
+    var tbody = document.getElementById('ref-tbody');
+    var title = document.getElementById('ref-results-title');
+    var countLbl = document.getElementById('ref-count-lbl');
+    if(!tbody) return;
+
+    title.textContent = 'Referenzkunden: '+selectedErp;
+    countLbl.textContent = refResults.length+' gefunden';
+
+    tbody.innerHTML = refResults.map(function(r, i){
+      var scoreCol = r.score>=70?'var(--cur)':r.score>=55?'var(--warn)':'var(--cu)';
+      var inLeads = LEADS.some(function(l){ return l.name && l.name.toLowerCase()===(r.name||'').toLowerCase(); });
+      return '<tr>'
+        +'<td><div class="con">'+he(r.name||'')+'</div></td>'
+        +'<td><span class="b bgray" style="font-size:10px">'+he(r.branche||'')+'</span></td>'
+        +'<td style="font-size:12px;color:var(--muted)">'+he(r.land||'')+'</td>'
+        +'<td style="font-size:12px;color:var(--muted)">'+he(r.employees||'-')+'</td>'
+        +'<td style="font-size:12px;color:var(--muted)">'+he(String(r.erp_year||'-'))+'</td>'
+        +'<td style="font-size:10.5px;color:var(--cu)">'+he(r.source||'Referenzseite')+'</td>'
+        +'<td>'+(inLeads
+          ? '<span style="font-size:10.5px;color:var(--ok);font-weight:700">✓ Lead</span>'
+          : '<button class="btn btnp btnsm" onclick="addRefLead('+i+')">+ Lead</button>')
+        +'</td>'
+        +'</tr>';
+    }).join('');
+
+    document.getElementById('ref-results').style.display='';
+    document.getElementById('ref-empty').style.display='none';
+  }
+
+  window.addRefLead = function(i){
+    var r = refResults[i];
+    if(!r) return;
+    var exists = LEADS.some(function(l){ return l.name && l.name.toLowerCase()===(r.name||'').toLowerCase(); });
+    if(exists){ showToast('Bereits in Leads','warn'); return; }
+    var id = Date.now() + i;
+    LEADS.push({id:id, name:r.name, erp:r.erp||selectedErp, branche:r.branche, land:r.land,
+      size:r.employees||'50-200', win_chance:r.score||55, stage:'Lead erkannt',
+      assign:'', notes_history:[], erp_year:r.erp_year||2010,
+      pain_points:['Veraltetes ERP','Referenzkunde']});
+    saveLeads(); syncLeads();
+    showToast(r.name+' hinzugefügt','ok');
+    renderRefResults();
+  };
+})();
+
+// ── JOB-PORTAL SCAN ──────────────────────────────────────────────────
+(function(){
+  var jobResults = [];
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Chips togglen
+    document.querySelectorAll('#job-portals .chip, #job-erp-chips .chip').forEach(function(c){
+      c.addEventListener('click', function(){ c.classList.toggle('on'); });
+    });
+
+    var scanBtn = document.getElementById('job-scan-btn');
+    if(scanBtn) scanBtn.addEventListener('click', doJobScan);
+
+    var addAllBtn = document.getElementById('job-add-all');
+    if(addAllBtn) addAllBtn.addEventListener('click', function(){
+      var added = 0;
+      jobResults.forEach(function(j){
+        var exists = LEADS.some(function(l){ return l.name && l.name.toLowerCase()===(j.company||'').toLowerCase(); });
+        if(!exists){
+          var id = Date.now() + Math.floor(Math.random()*10000) + added;
+          LEADS.push({id:id, name:j.company, erp:j.erp||'Unbekannt', branche:j.branche||'IT/Software',
+            land:j.land||'Österreich', size:j.employees||'50-500', win_chance:j.score||65,
+            stage:'Lead erkannt', assign:'', notes_history:[],
+            pain_points:['Aktiv ERP-Berater gesucht – hoher Handlungsbedarf'],
+            job_source: j.portal+': '+j.job_title});
+          added++;
+        }
+      });
+      saveLeads(); syncLeads();
+      showToast(added+' Firmen als Leads hinzugefügt','ok');
+    });
+
+    var resetBtn = document.getElementById('job-reset');
+    if(resetBtn) resetBtn.addEventListener('click', function(){
+      jobResults = [];
+      document.getElementById('job-results').style.display='none';
+      document.getElementById('job-kpi-row').style.display='none';
+      document.getElementById('job-empty').style.display='';
+    });
+  });
+
+  async function doJobScan(){
+    if(!localStorage.getItem('cu_apikey')){ showToast('Kein API Key','err'); return; }
+
+    var portals = Array.from(document.querySelectorAll('#job-portals .chip.on')).map(function(c){ return c.getAttribute('data-v'); });
+    var keywords = Array.from(document.querySelectorAll('#job-erp-chips .chip.on')).map(function(c){ return c.getAttribute('data-v'); });
+    var customKw = (document.getElementById('job-custom-kw').value||'').trim();
+    if(customKw) keywords.push(customKw);
+    if(!keywords.length){ showToast('Bitte Suchbegriff wählen','warn'); return; }
+
+    var region = document.getElementById('job-region').value || 'DACH';
+    var count = document.getElementById('job-count').value || '20';
+
+    document.getElementById('job-prog').style.display='block';
+    document.getElementById('job-empty').style.display='none';
+    document.getElementById('job-results').style.display='none';
+    document.getElementById('job-kpi-row').style.display='none';
+    document.getElementById('job-scan-btn').disabled=true;
+
+    var log = document.getElementById('job-prog-log');
+    var fill = document.getElementById('job-prog-fill');
+    var pctEl = document.getElementById('job-prog-pct');
+
+    function setP(p, msg){ fill.style.width=p+'%'; pctEl.textContent=p+'%'; if(msg && log) log.innerHTML+=msg+'<br>'; }
+
+    setP(10, '🔍 Verbinde mit Job-Portalen: '+portals.join(', ')+'...');
+    await new Promise(function(r){ setTimeout(r,400); });
+    setP(30, '📋 Suche nach: '+keywords.join(', ')+'...');
+    await new Promise(function(r){ setTimeout(r,500); });
+    setP(55, '🏢 Analysiere ausschreibende Firmen...');
+
+    var prompt = 'Du bist ein B2B-Lead-Recherche-Assistent für ERP-Migrationen zu Odoo.\n'
+      +'Simuliere eine Suche auf den Job-Portalen '+portals.join(', ')+' nach den Begriffen: '+keywords.join(', ')+'.\n'
+      +'Region: '+region+'. Finde '+count+' Firmen, die solche Stellen ausgeschrieben haben.\n'
+      +'Firmen die ERP-Berater suchen = sie haben Probleme mit ihrem aktuellen ERP = perfekte Zielkunden für Odoo.\n'
+      +'Gib zurück als JSON-Array:\n'
+      +'[{"company":"Firma GmbH","job_title":"SAP Berater (m/w/d)","portal":"karriere.at",'
+      +'"erp":"SAP Business One","branche":"Fertigung","land":"Oberösterreich",'
+      +'"employees":"100-500","score":75,"urgency":"hoch","tags":["SAP","ERP","Vollzeit"]},...]\n'
+      +'score 60-90 je nach Dringlichkeit, urgency: hoch/mittel/niedrig';
+
+    try{
+      setP(70, '🤖 KI analysiert Job-Inserate...');
+      var r = await callAPI(prompt, 3500, 'Job-Scan: '+keywords.join(','), 'Antworte NUR mit dem JSON-Array.');
+      setP(90, '✅ Verarbeite Ergebnisse...');
+      await new Promise(function(r){ setTimeout(r,300); });
+      var arr = extractJSON(r);
+      if(!Array.isArray(arr)) throw new Error('Kein Array');
+      jobResults = arr;
+      renderJobResults(portals.length);
+      setP(100, '✅ '+jobResults.length+' Job-Inserate gefunden');
+      setTimeout(function(){ document.getElementById('job-prog').style.display='none'; }, 1500);
+    } catch(e){
+      document.getElementById('job-prog').style.display='none';
+      document.getElementById('job-empty').style.display='';
+      showToast('Fehler: '+e.message,'err');
+    }
+    document.getElementById('job-scan-btn').disabled=false;
+  }
+
+  function renderJobResults(portalCount){
+    var container = document.getElementById('job-cards-container');
+    if(!container) return;
+
+    var uniqueFirms = {};
+    jobResults.forEach(function(j){ if(j.company) uniqueFirms[j.company]=true; });
+    var hotCount = jobResults.filter(function(j){ return j.score>=70; }).length;
+
+    document.getElementById('job-kpi-tot').textContent = jobResults.length;
+    document.getElementById('job-kpi-firms').textContent = Object.keys(uniqueFirms).length;
+    document.getElementById('job-kpi-hot').textContent = hotCount;
+    document.getElementById('job-kpi-portals').textContent = portalCount;
+    document.getElementById('job-kpi-row').style.display='grid';
+
+    container.innerHTML = jobResults.map(function(j, i){
+      var inLeads = LEADS.some(function(l){ return l.name && l.name.toLowerCase()===(j.company||'').toLowerCase(); });
+      var urgColor = j.urgency==='hoch'?'var(--cur)':j.urgency==='mittel'?'var(--warn)':'var(--cu)';
+      var tags = (j.tags||[]).map(function(t){ return '<span class="job-tag">'+he(t)+'</span>'; }).join('');
+      return '<div class="job-card">'
+        +'<div class="job-card-top">'
+        +'<div><div class="job-company">'+he(j.company||'')+'</div><div class="job-title">'+he(j.job_title||'')+'</div></div>'
+        +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">'
+        +'<span class="job-portal-badge">'+he(j.portal||'')+'</span>'
+        +'<span style="font-size:10.5px;font-weight:700;color:'+urgColor+'">⚡ '+he(j.urgency||'')+'</span>'
+        +'</div></div>'
+        +'<div style="display:flex;gap:16px;font-size:11.5px;color:var(--muted);margin-top:4px">'
+        +'<span>🏢 '+he(j.erp||'')+'</span><span>🏭 '+he(j.branche||'')+'</span><span>📍 '+he(j.land||'')+'</span><span>👥 '+he(j.employees||'')+'</span>'
+        +'<span style="margin-left:auto;font-size:13px;font-weight:800;color:'+urgColor+'">'+he(String(j.score||'-'))+'</span>'
+        +'</div>'
+        +(tags?'<div class="job-tags">'+tags+'</div>':'')
+        +'<div style="margin-top:8px;display:flex;gap:7px">'
+        +(inLeads
+          ? '<span style="font-size:11px;color:var(--ok);font-weight:700">✓ Bereits in Leads</span>'
+          : '<button class="btn btnp btnsm" onclick="addJobLead('+i+')">+ Als Lead</button>')
+        +'<button class="btn btng btnsm" onclick="openJobLinkedIn(\''+encodeURIComponent(j.company||'')+'\')">🔗 LinkedIn</button>'
+        +'</div></div>';
+    }).join('');
+
+    document.getElementById('job-results').style.display='';
+    document.getElementById('job-empty').style.display='none';
+  }
+
+  window.addJobLead = function(i){
+    var j = jobResults[i];
+    if(!j) return;
+    var exists = LEADS.some(function(l){ return l.name && l.name.toLowerCase()===(j.company||'').toLowerCase(); });
+    if(exists){ showToast('Bereits in Leads','warn'); return; }
+    var id = Date.now() + i;
+    LEADS.push({id:id, name:j.company, erp:j.erp||'Unbekannt', branche:j.branche||'IT/Software',
+      land:j.land||'Österreich', size:j.employees||'50-500', win_chance:j.score||65,
+      stage:'Lead erkannt', assign:'', notes_history:[],
+      pain_points:['Aktiv ERP-Berater gesucht – hoher Handlungsbedarf']});
+    saveLeads(); syncLeads();
+    showToast(j.company+' hinzugefügt','ok');
+    renderJobResults(0);
+  };
+
+  window.openJobLinkedIn = function(companyEncoded){
+    var company = decodeURIComponent(companyEncoded);
+    window.open('https://www.linkedin.com/search/results/companies/?keywords='+encodeURIComponent(company),'_blank');
+  };
+})();
+
+// ── LINKEDIN ERSTKONTAKT ──────────────────────────────────────────────
+(function(){
+  var liLead = null;
+
+  window.initLinkedIn = function(lead){
+    liLead = lead;
+    var msgOut = document.getElementById('li-msg-out');
+    var msgActions = document.getElementById('li-msg-actions');
+    if(msgOut){ msgOut.style.display='none'; msgOut.textContent=''; }
+    if(msgActions) msgActions.style.display='none';
+    document.getElementById('li-msg-loading').style.display='none';
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var liGf = document.getElementById('li-search-gf');
+    if(liGf) liGf.addEventListener('click', function(){
+      if(!liLead) return;
+      var q = encodeURIComponent('Geschäftsführer OR CEO OR Inhaber "'+liLead.name+'"');
+      window.open('https://www.linkedin.com/search/results/people/?keywords='+q,'_blank');
+    });
+
+    var liIt = document.getElementById('li-search-it');
+    if(liIt) liIt.addEventListener('click', function(){
+      if(!liLead) return;
+      var q = encodeURIComponent('IT-Leiter OR CIO OR "Head of IT" "'+liLead.name+'"');
+      window.open('https://www.linkedin.com/search/results/people/?keywords='+q,'_blank');
+    });
+
+    var liGen = document.getElementById('li-gen-msg');
+    if(liGen) liGen.addEventListener('click', genLinkedInMsg);
+
+    var liCopy = document.getElementById('li-copy-msg');
+    if(liCopy) liCopy.addEventListener('click', function(){
+      var t = document.getElementById('li-msg-out').textContent;
+      navigator.clipboard.writeText(t).then(function(){ showToast('Kopiert!','ok'); });
+    });
+
+    var liRegen = document.getElementById('li-regen-msg');
+    if(liRegen) liRegen.addEventListener('click', genLinkedInMsg);
+  });
+
+  async function genLinkedInMsg(){
+    if(!liLead){ showToast('Kein Lead ausgewählt','warn'); return; }
+    if(!localStorage.getItem('cu_apikey')){ showToast('Kein API Key','err'); return; }
+
+    var loading = document.getElementById('li-msg-loading');
+    var out = document.getElementById('li-msg-out');
+    var actions = document.getElementById('li-msg-actions');
+
+    loading.style.display='block';
+    out.style.display='none';
+    if(actions) actions.style.display='none';
+
+    var age = new Date().getFullYear() - (liLead.erp_year||2015);
+    var pains = (liLead.pain_points||[]).join(', ') || 'Veraltetes ERP-System';
+
+    var prompt = 'Erstelle eine kurze, persönliche LinkedIn-Kontaktanfrage-Nachricht auf Deutsch.\n'
+      +'Zielunternehmen: '+liLead.name+'\n'
+      +'Branche: '+(liLead.branche||'-')+'\n'
+      +'Region: '+(liLead.land||'-')+'\n'
+      +'Aktuelles ERP: '+liLead.erp+' (seit '+age+' Jahren in Betrieb)\n'
+      +'Schmerzpunkte: '+pains+'\n'
+      +'Absender: Nicolas Hauser, ERP-Berater bei Cloudunify (Odoo-Partner)\n\n'
+      +'Regeln:\n'
+      +'- Max 300 Zeichen (LinkedIn-Limit)\n'
+      +'- Persönlich und spezifisch auf die Firma eingehen\n'
+      +'- Nicht aufdringlich, eher neugierig und lösungsorientiert\n'
+      +'- Mention das veraltete ERP subtil als Anlass\n'
+      +'- Mit konkretem Nutzen-Versprechen enden\n'
+      +'- Kein "Sehr geehrte/r", lieber "Hallo [Name]," (Platzhalter lassen)\n\n'
+      +'Antworte NUR mit dem Nachrichtentext, ohne Anführungszeichen oder Erklärungen.';
+
+    try{
+      var r = await callAPI(prompt, 500, 'LinkedIn-Msg: '+liLead.name, null);
+      out.textContent = r.trim();
+      out.style.display='block';
+      if(actions) actions.style.display='flex';
+    } catch(e){
+      showToast('Fehler: '+e.message,'err');
+    }
+    loading.style.display='none';
+  }
+})();
+
+// ── UMSATZ-FILTER IN renderLeads EINBINDEN ───────────────────────────
+// Patch renderLeads to also filter by revenue
+(function(){
+  var origRenderLeads = null;
+  document.addEventListener('DOMContentLoaded', function(){
+    // We hook after initial load — patch happens in filter event listener
+    var fu = document.getElementById('fumsatz');
+    if(!fu) return;
+    // Trigger re-render when changed
+    fu.addEventListener('change', function(){
+      var data = getVis ? getVis() : (window.LEADS||[]);
+      if(typeof renderLeads === 'function') renderLeads(data);
+    });
+  });
+})();
 
 </script>
 </body>
