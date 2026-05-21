@@ -437,8 +437,10 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
       <span class="chip" data-erp="ISEntial ERP" data-age="2007">ISEntial ERP</span>
       <span class="chip" data-erp="Infor ERP LN" data-age="2003">Infor ERP LN</span>
       <span class="chip" data-erp="Epicor ERP" data-age="2005">Epicor ERP</span>
+      <span class="chip" data-erp="proALPHA ERP" data-age="2004">proALPHA</span>
+      <span class="chip" data-erp="Ramsauer &amp; Stürmer (Aptean)" data-age="2005">Ramsauer &amp; Stürmer</span>
     </div>
-    <div style="display:flex;align-items:center;gap:9px;margin-top:12px">
+    <div style="display:flex;align-items:center;gap:9px;margin-top:12px;flex-wrap:wrap">
       <select id="ref-count" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none">
         <option value="10">10 Referenzen</option>
         <option value="20" selected>20 Referenzen</option>
@@ -449,6 +451,13 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
         <option value="Österreich">Österreich</option>
         <option value="Deutschland">Deutschland</option>
         <option value="Schweiz">Schweiz</option>
+      </select>
+      <select id="ref-employees" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none">
+        <option value="">Alle Größen</option>
+        <option value="10-50">10–50 MA</option>
+        <option value="50-200">50–200 MA</option>
+        <option value="200-500">200–500 MA</option>
+        <option value="500+">500+ MA</option>
       </select>
       <button class="bscan" id="ref-scan-btn" disabled>🔍 Referenzen laden</button>
     </div>
@@ -2311,6 +2320,7 @@ function umsatzMatch(l, val){
 
     var count = document.getElementById('ref-count').value || '20';
     var region = document.getElementById('ref-region').value || 'DACH';
+    var empFilter = document.getElementById('ref-employees').value || '';
 
     document.getElementById('ref-prog').style.display='block';
     document.getElementById('ref-empty').style.display='none';
@@ -2329,9 +2339,10 @@ function umsatzMatch(l, val){
     await new Promise(function(r){ setTimeout(r,500); });
     setP(55, '🏢 Extrahiere Firmendaten...');
 
+    var empHint = empFilter ? ' Mitarbeitergröße: nur Firmen mit '+empFilter+' Mitarbeitern.' : '';
     var prompt = 'Du bist ein B2B-Vertriebsassistent für ERP-Migrationen (Ziel: Odoo).\n'
       +'Erstelle eine Liste von '+count+' realen oder realistischen Firmen aus '+region+' (DACH), die bekanntermaßen das ERP-System "'+selectedErp+'" einsetzen oder eingesetzt haben.\n'
-      +'Diese sind von der offiziellen Referenzseite des ERP-Anbieters oder aus Case Studies bekannt.\n'
+      +'Diese sind von der offiziellen Referenzseite des ERP-Anbieters oder aus Case Studies bekannt.'+empHint+'\n'
       +'Für jede Firma: Name, Branche, Region (Bundesland/Land), Mitarbeiterzahl-Schätzung, geschätztes ERP-Einführungsjahr, Odoo-Score 30-85.\n'
       +'Gib zurück als JSON-Array: [{"name":"Firma GmbH","branche":"Fertigung","land":"Steiermark","employees":"50-200","erp_year":2012,"score":72,"source":"ERP-Referenzseite"},...]';
 
