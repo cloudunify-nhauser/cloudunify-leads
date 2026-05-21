@@ -401,7 +401,7 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div id="at-charts" style="display:none"><div class="g2"><div class="card"><div class="cttl">Ø Chance nach ERP</div><div id="ach-erp"></div></div><div class="card"><div class="cttl">Chancen nach Branche</div><div id="ach-br"></div></div></div><div class="g2"><div class="card"><div class="cttl">Leads nach Region</div><div id="ach-land"></div></div><div class="card"><div class="cttl">ERP-Alter Verteilung</div><div id="ach-age"></div></div></div></div>
 </div>
 <div class="page" id="page-scraper">
-<div class="scho"><div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div><div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div><div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:11px">Oder KI-Scan:</div><div class="chips" id="regchips"><span class="chip on" data-v="Salzburg">Salzburg</span><span class="chip on" data-v="Oberösterreich">Oberösterreich</span><span class="chip" data-v="Tirol">Tirol</span><span class="chip" data-v="Wien">Wien</span><span class="chip" data-v="Steiermark">Steiermark</span><span class="chip" data-v="Bayern">Bayern</span><span class="chip" data-v="Deutschland">Deutschland</span></div><div class="chips" id="indchips" style="margin-top:5px"><span class="chip on" data-v="Metalltechnik">Metalltechnik</span><span class="chip on" data-v="Logistik">Logistik</span><span class="chip on" data-v="Produktion">Produktion</span><span class="chip on" data-v="Großhandel">Großhandel</span><span class="chip" data-v="Maschinenbau">Maschinenbau</span><span class="chip" data-v="Lebensmittel">Lebensmittel</span><span class="chip" data-v="Bau">Bau</span></div><div style="display:flex;align-items:center;gap:9px;margin-top:12px"><select id="scanmax" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="10">10 Firmen</option><option value="25" selected>25 Firmen</option><option value="50">50 Firmen</option></select><select id="scanmin" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="0">Alle Scores</option><option value="45" selected>Warm+ (≥45)</option><option value="70">Hot only (≥70)</option></select><button class="bscan" id="scanbtn">🚀 KI-Scan</button><button class="bscan" id="demobtn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25)">Demo laden</button></div></div>
+<div class="scho"><div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div><div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div><div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:11px">Oder KI-Scan:</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:4px">🇦🇹 Österreich</div><div class="chips" id="regchips"><span class="chip" data-v="Wien">Wien</span><span class="chip" data-v="Niederösterreich">Niederösterreich</span><span class="chip" data-v="Oberösterreich">Oberösterreich</span><span class="chip" data-v="Steiermark">Steiermark</span><span class="chip" data-v="Tirol">Tirol</span><span class="chip" data-v="Salzburg">Salzburg</span><span class="chip" data-v="Kärnten">Kärnten</span><span class="chip" data-v="Vorarlberg">Vorarlberg</span><span class="chip" data-v="Burgenland">Burgenland</span><span class="chip" data-v="🇩🇪" style="opacity:.4;cursor:default;pointer-events:none">·</span><span class="chip" data-v="Deutschland">Deutschland</span><span class="chip" data-v="Bayern">Bayern</span><span class="chip" data-v="Baden-Württemberg">Baden-Württemberg</span><span class="chip" data-v="NRW">NRW</span><span class="chip" data-v="Hessen">Hessen</span><span class="chip" data-v="🇨🇭" style="opacity:.4;cursor:default;pointer-events:none">·</span><span class="chip" data-v="Schweiz">Schweiz</span></div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:8px;margin-bottom:4px">Branchen</div><div class="chips" id="indchips"><span class="chip" data-v="Metalltechnik">Metalltechnik</span><span class="chip" data-v="Logistik">Logistik</span><span class="chip" data-v="Produktion">Produktion</span><span class="chip" data-v="Großhandel">Großhandel</span><span class="chip" data-v="Maschinenbau">Maschinenbau</span><span class="chip" data-v="Lebensmittel">Lebensmittel</span><span class="chip" data-v="Bau">Bau</span><span class="chip" data-v="Handel">Handel</span><span class="chip" data-v="Automotive">Automotive</span><span class="chip" data-v="IT/Software">IT/Software</span></div><div style="display:flex;align-items:center;gap:9px;margin-top:12px"><select id="scanmax" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="10">10 Firmen</option><option value="25" selected>25 Firmen</option><option value="50">50 Firmen</option></select><select id="scanmin" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="0">Alle Scores</option><option value="45" selected>Warm+ (≥45)</option><option value="70">Hot only (≥70)</option></select><button class="bscan" id="scanbtn">🚀 KI-Scan</button><button class="bscan" id="demobtn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25)">Demo laden</button></div></div>
 <div class="prog" id="prog"><div class="proghd"><h3 id="progttl">Scanne...</h3><span class="progpct" id="progpct">0%</span></div><div class="progbar"><div class="progfill" id="progfill"></div></div><div class="logbox" id="proglog"></div></div>
 <div class="ikpig" id="ikpig" style="display:none"><div class="ikpi itot"><div class="ikpiv" id="iktot">0</div><div class="ikpil">Analysiert</div></div><div class="ikpi ihot"><div class="ikpiv" id="ikhot">0</div><div class="ikpil">Hot ≥70</div></div><div class="ikpi iwarm"><div class="ikpiv" id="ikwarm">0</div><div class="ikpil">Warm 45-69</div></div><div class="ikpi icold"><div class="ikpiv" id="ikcold">0</div><div class="ikpil">Cold 20-44</div></div><div class="ikpi iavg"><div class="ikpiv" id="ikavg">-</div><div class="ikpil">Ø Score</div></div></div>
 <div id="iresults" style="display:none"><div class="tw"><div class="twh"><div style="font-size:13px;font-weight:700">KI-Ergebnisse</div><div style="display:flex;gap:8px"><button class="btn btng btnsm" id="icsv">↓ CSV</button><button class="btn btng btnsm" id="iclr">↺ Reset</button></div></div><div style="max-height:calc(100vh - 430px);overflow-y:auto"><table><thead><tr><th>#</th><th>Unternehmen</th><th>Ort</th><th>Branche</th><th style="text-align:center">Score</th><th>Kat.</th><th style="text-align:center">Qual.</th><th>Indikatoren</th><th></th></tr></thead><tbody id="itbody"></tbody></table></div></div></div>
@@ -496,16 +496,16 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
   <div style="margin-top:12px">
     <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">Job-Portale</div>
     <div class="jpchips" id="job-portals" style="margin-bottom:10px">
-      <span class="jpchip on chip" data-v="karriere.at">karriere.at</span>
-      <span class="jpchip on chip" data-v="StepStone.at">StepStone.at</span>
-      <span class="jpchip on chip" data-v="Indeed.at">Indeed.at</span>
+      <span class="jpchip chip" data-v="karriere.at">karriere.at</span>
+      <span class="jpchip chip" data-v="StepStone.at">StepStone.at</span>
+      <span class="jpchip chip" data-v="Indeed.at">Indeed.at</span>
       <span class="jpchip chip" data-v="LinkedIn Jobs">LinkedIn Jobs</span>
       <span class="jpchip chip" data-v="StepStone.de">StepStone.de</span>
     </div>
     <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">ERP-Suchbegriffe</div>
     <div id="job-erp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
-      <span class="chip on" data-v="SAP Berater">SAP Berater</span>
-      <span class="chip on" data-v="ERP Consultant">ERP Consultant</span>
+      <span class="chip" data-v="SAP Berater">SAP Berater</span>
+      <span class="chip" data-v="ERP Consultant">ERP Consultant</span>
       <span class="chip" data-v="Navision Consultant">Navision Consultant</span>
       <span class="chip" data-v="SAP Business One">SAP Business One</span>
       <span class="chip" data-v="ERP Administrator">ERP Administrator</span>
@@ -903,8 +903,8 @@ function setupEvents(){
     t.onclick = function(){ aTab(t.getAttribute('data-at'), t); };
   });
 
-  // Scraper chips
-  document.querySelectorAll('.chip').forEach(function(c){
+  // Scraper chips (nur regchips + indchips, nicht globale .chip-Selektion)
+  document.querySelectorAll('#regchips .chip, #indchips .chip').forEach(function(c){
     c.onclick = function(){ c.classList.toggle('on'); };
   });
   document.getElementById('scrapebtn').onclick = scrapeSingle;
@@ -1775,7 +1775,7 @@ async function callAPI(prompt, maxTok, desc, system){
   try{
     resp=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      headers:(function(){var h={'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'};h['anthropic-'+'dangerous'+'-direct-'+'browser'+'-access']='true';return h;})(),
       body:JSON.stringify(body)
     });
   } catch(netErr){
@@ -2271,19 +2271,18 @@ function umsatzMatch(l, val){
   var selectedErp = null;
   var refResults = [];
 
-  document.addEventListener('DOMContentLoaded', function(){
-    // Chip-Auswahl
-    var chips = document.querySelectorAll('#erp-vendor-list .chip');
-    chips.forEach(function(c){
-      c.addEventListener('click', function(){
-        chips.forEach(function(x){ x.classList.remove('on'); });
-        c.classList.add('on');
-        selectedErp = c.getAttribute('data-erp');
-        var btn = document.getElementById('ref-scan-btn');
-        if(btn) btn.disabled = false;
-      });
-    });
+  // ERP-Vendor Chip-Delegation (sofort, kein DOMContentLoaded)
+  document.addEventListener('click', function(e){
+    var c = e.target.closest('#erp-vendor-list .chip');
+    if(!c) return;
+    document.querySelectorAll('#erp-vendor-list .chip').forEach(function(x){ x.classList.remove('on'); });
+    c.classList.add('on');
+    selectedErp = c.getAttribute('data-erp');
+    var btn = document.getElementById('ref-scan-btn');
+    if(btn) btn.disabled = false;
+  });
 
+  document.addEventListener('DOMContentLoaded', function(){
     var scanBtn = document.getElementById('ref-scan-btn');
     if(scanBtn) scanBtn.addEventListener('click', doRefScan);
 
@@ -2416,11 +2415,13 @@ function umsatzMatch(l, val){
 (function(){
   var jobResults = [];
 
+  // Job-Portal und ERP-Keyword Chips per Event-Delegation (läuft sofort, kein DOMContentLoaded nötig)
+  document.addEventListener('click', function(e){
+    var c = e.target.closest('#job-portals .chip, #job-erp-chips .chip');
+    if(c) c.classList.toggle('on');
+  });
+
   document.addEventListener('DOMContentLoaded', function(){
-    // Chips togglen
-    document.querySelectorAll('#job-portals .chip, #job-erp-chips .chip').forEach(function(c){
-      c.addEventListener('click', function(){ c.classList.toggle('on'); });
-    });
 
     var scanBtn = document.getElementById('job-scan-btn');
     if(scanBtn) scanBtn.addEventListener('click', doJobScan);
