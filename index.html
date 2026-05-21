@@ -405,6 +405,7 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div>
 <div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div>
 <div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div>
+<div id="scraper-debug" style="display:none;background:rgba(0,0,0,.4);border-radius:8px;padding:10px;margin-top:10px;font-size:11px;color:#fff;word-break:break-all;white-space:pre-wrap;max-height:120px;overflow-y:auto"></div>
 <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:13px;margin-bottom:6px;font-weight:700">KI-Scan konfigurieren:</div>
 
 <div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;font-weight:800">📍 Region</div>
@@ -916,6 +917,7 @@ function initApp(){
   }
   var model = localStorage.getItem('cu_model') || 'sonnet';
   applyModel(model);
+
   var key = localStorage.getItem('cu_apikey');
   if(key){ var ks = document.getElementById('keyst'); if(ks){ ks.textContent = '✓ Gespeichert'; ks.style.color = 'var(--ok)'; } var scb=document.getElementById('scanbtn'); if(scb) scb.disabled=false; var srpb=document.getElementById('scrapebtn'); if(srpb) srpb.disabled=false; var skeyEl=document.getElementById('skey'); if(skeyEl) skeyEl.value=key; }
   var sbUrl = localStorage.getItem('sb_url');
@@ -1564,10 +1566,14 @@ async function scrapeSingle(){
   if(!localStorage.getItem('cu_apikey')){ showToast('Kein API Key','err'); return; }
   showToast('Analysiere: '+url);
   try{
-    var prompt = 'Analysiere Website als B2B-ERP-Lead f\xfcr Odoo: '+url+'\nBewerte ERP-Potenzial. Suche auch nach LinkedIn-Profil der Firma. Antworte mit JSON:\n{"name":"Firma","website":"'+url+'","linkedin_url":"https://linkedin.com/company/firma","city":"Stadt","state":"Bundesland","industry":"Branche","size":"51-200","employees":80,"founded":2005,"email":"","phone":"","erp_lead_score":70,"cat":"warm","erp_fit":"ERP-Modernisierung","indicators":["I1","I2"],"pain_points":["P1"],"pitch":"Einstieg","keywords":["k1"],"legacy_system":null,"notes":"Begr\xfcndung"}';
-    var r = await callAPI(prompt, 800, 'Scraper: '+url);
+    var prompt = 'Erstelle eine hypothetische B2B-ERP-Lead-Analyse f\xfcr die Firma hinter dieser Website: '+url+'\nLeite aus Domain/URL den Firmennamen ab und sch\xe4tze: Branche, Standort \xd6sterreich, Gr\xf6\xdfe, ERP-Potenzial f\xfcr Odoo. Verwende Platzhalter wenn unbekannt.\nFelder: name, website ("'+url+'"), linkedin_url, city, state, industry, size (z.B. "11-50"), employees (Zahl), founded (Zahl), email, phone, erp_lead_score (0-100), cat ("hot"/"warm"/"cold"/"disqualified"), erp_fit, indicators (Array mit Strings), pain_points (Array mit Strings), pitch, keywords (Array mit Strings), legacy_system (null oder String), notes.';
+    var r = await callAPI(prompt, 2000, 'Scraper: '+url, 'Antworte IMMER mit einem vollst\xe4ndigen validen JSON-Objekt, auch f\xfcr unbekannte Websites. Sch\xe4tze alle Werte. Nur JSON, kein Text, kein Markdown.');
+    console.log('[SCRAPER] raw response:', r);
+    var dbg = document.getElementById('scraper-debug');
+    if(dbg){ dbg.style.display='block'; dbg.textContent='API-Antwort: '+r.substring(0,300); }
     var l = extractJSON(r);
-    if(!l) throw new Error('Kein JSON in Antwort');
+    if(!l){ showToast('Parse-Fehler \u2014 siehe Debug unten','err'); return; }
+    if(dbg) dbg.style.display='none';
     l.id = 's'+Math.random().toString(36).substr(2,8);
     INTEL.unshift(l);
     showIntelResults();
@@ -1597,16 +1603,16 @@ async function startScan(){
   var erpHint = erps.length ? ' Die Firmen sollen wahrscheinlich eines dieser ERP-Systeme nutzen: '+erps.join(', ')+'.' : '';
   iLog('Scan: '+regs.join(', ')+' | '+inds.join(', ')+(erps.length?' | ERP: '+erps.join(', '):'')+' | max '+maxN);
   try{
-    var seed = 'Generiere '+maxN+' realistische KMU aus Regionen: '+regs.join(', ')+', Branchen: '+inds.join(', ')+'.'+erpHint+' NUR JSON-Array:\n[{"name":"GmbH","city":"Stadt","state":"'+regs[0]+'","industry":"'+inds[0]+'","erp_hint":"'+( erps[0]||'')+'","size":"51-200","website":"firma.at","linkedin_url":"https://linkedin.com/company/firma","email":"office@firma.at","phone":"+43 XXX","employees":80,"multiLocation":false,"founded":2005}]';
-    var raw1 = await callAPI(seed, Math.max(2000,maxN*80), 'Firmenliste');
+    var seed = 'Generiere '+maxN+' realistische österreichische KMU-Firmen als JSON-Array. Regionen: '+regs.join(', ')+'. Branchen: '+inds.join(', ')+'.'+erpHint+' Felder: name, city, state, industry, erp_hint, size (z.B. "51-200"), website, linkedin_url, email, phone, employees (Zahl), multiLocation (Boolean), founded (Zahl).';
+    var raw1 = await callAPI(seed, Math.max(4000,maxN*250), 'Firmenliste', 'Antworte nur mit dem Inhalt des JSON-Arrays, ohne öffnende eckige Klammer am Anfang, ohne schließende eckige Klammer am Ende, ohne Codeblöcke.', '[');
     var companies = [];
     try{
-      var m1=raw1.match(/\[[\s\S]*\]/);
-      if(!m1){ console.error('[Scan] Keine JSON-Array in Firmenliste. Antwort:', raw1.substring(0,300)); throw new Error('Keine Firmenliste in API-Antwort gefunden'); }
-      companies=JSON.parse(m1[0]);
+      var j1='['+raw1.trim();
+      if(!j1.trimEnd().endsWith(']')) j1=j1.replace(/,?\s*$/,'')+']';
+      companies=JSON.parse(j1);
       if(!Array.isArray(companies)||!companies.length) throw new Error('Leere Firmenliste');
     }
-    catch(pe){ iLog('Firmenliste Fehler: '+pe.message,'err'); throw new Error('Firmenliste: '+pe.message); }
+    catch(pe){ iLog('Firmenliste Fehler: '+pe.message+' | Antwort-Vorschau: '+raw1.substring(0,120),'err'); throw new Error('Firmenliste: '+pe.message); }
     iLog(companies.length+' Firmen generiert','ok');
     setProg(20,'Analysiere...');
     var CHUNK=10, chunks=[];
@@ -1615,12 +1621,16 @@ async function startScan(){
       var chunk = chunks[chi];
       setProg(20+(chi/chunks.length)*75,'Batch '+(chi+1)+'/'+chunks.length);
       iLog('Batch '+(chi+1)+': '+chunk.map(function(c){ return c.name.split(' ')[0]; }).join(', ')+'...');
-      var bp = 'Analysiere alle '+chunk.length+' Firmen:\n'+chunk.map(function(c,idx){ return (idx+1)+'. '+c.name+' | '+c.city+', '+c.state+' | '+c.industry+' | '+c.employees+' MA | '+c.founded; }).join('\n')+'\nNUR JSON-Array ('+chunk.length+' Objekte):\n[{"erp_lead_score":75,"confidence_score":70,"no_erp_probability":60,"outdated_erp_probability":35,"digital_maturity":"low","cat":"hot","erp_fit":"ERP-Einf\xfchrung","indicators":["I1","I2","I3"],"evidence":["E1"],"pain_points":["P1","P2"],"pitch":"Einstieg","contact_roles":["Rolle"],"keywords":["k1"],"legacy_system":null,"notes":"Begr\xfcndung"}]\ncat: hot>=70,warm>=45,cold>=20,disqualified<20';
+      var bp = 'Analysiere diese '+chunk.length+' Firmen und bewerte ERP-Lead-Potenzial:\n'+chunk.map(function(c,idx){ return (idx+1)+'. '+c.name+' | '+c.city+', '+c.state+' | '+c.industry+' | '+c.employees+' MA | gegr. '+c.founded; }).join('\n')+'\nFelder pro Objekt ('+chunk.length+' Objekte, gleiche Reihenfolge): erp_lead_score (0-100), confidence_score (0-100), no_erp_probability (0-100), outdated_erp_probability (0-100), digital_maturity ("low"/"mid"/"high"), cat ("hot"/"warm"/"cold"/"disqualified"), erp_fit (string), indicators (array), evidence (array), pain_points (array), pitch (string), contact_roles (array), keywords (array), legacy_system (string|null), notes (string). cat: hot>=70, warm>=45, cold>=20, disqualified<20.';
       try{
-        var raw2 = await callAPI(bp, Math.min(4000,chunk.length*450), 'Batch '+(chi+1));
+        var raw2 = await callAPI(bp, Math.max(4000,chunk.length*500), 'Batch '+(chi+1), 'Antworte nur mit dem Inhalt des JSON-Arrays, ohne öffnende eckige Klammer am Anfang, ohne schließende eckige Klammer am Ende, ohne Codeblöcke.', '[');
         var analyses = [];
-        try{ var m2=raw2.match(/\[[\s\S]*\]/); if(!m2) throw new Error(); analyses=JSON.parse(m2[0]); }
-        catch(e2){ var om=raw2.match(/\{[\s\S]*?\}(?=\s*[,\]])/g); if(om) analyses=om.map(function(s){ try{ return JSON.parse(s); }catch(e3){ return null; } }).filter(Boolean); }
+        try{
+          var j2='['+raw2.trim();
+          if(!j2.trimEnd().endsWith(']')) j2=j2.replace(/,?\s*$/,'')+']';
+          analyses=JSON.parse(j2);
+        }
+        catch(e2){ var om=raw2.match(/\{[\s\S]*?\}(?=\s*[,\]$])/g); if(om) analyses=om.map(function(s){ try{ return JSON.parse(s); }catch(e3){ return null; } }).filter(Boolean); }
         analyses.forEach(function(a, idx){
           if(!a || idx>=chunk.length) return;
           var co = chunk[idx]; var score = Number(a.erp_lead_score)||0;
@@ -1872,12 +1882,14 @@ var HIST=JSON.parse(localStorage.getItem('cu_hist')||'[]');
 function curModel(){ return localStorage.getItem('cu_model')||'sonnet'; }
 function modelId(m){ return m==='opus'?'claude-opus-4-7':'claude-sonnet-4-6'; }
 
-async function callAPI(prompt, maxTok, desc, system){
+async function callAPI(prompt, maxTok, desc, system, prefill){
   var key=localStorage.getItem('cu_apikey');
   if(!key) throw new Error('Kein API Key - bitte in Einstellungen eintragen');
   var model=modelId(curModel());
   console.log('[API] Call:', desc, '| Model:', model, '| Tokens:', maxTok, '| Key vorhanden:', !!key);
-  var body={model:model,max_tokens:maxTok||1000,messages:[{role:'user',content:prompt}]};
+  var msgs=[{role:'user',content:prompt}];
+  if(prefill) msgs.push({role:'assistant',content:prefill});
+  var body={model:model,max_tokens:maxTok||1000,messages:msgs};
   if(system) body.system=system;
   var resp;
   try{
