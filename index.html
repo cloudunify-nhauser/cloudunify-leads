@@ -401,7 +401,113 @@ tr.cr:hover td{background:#F8FAFD;cursor:pointer;}
 <div id="at-charts" style="display:none"><div class="g2"><div class="card"><div class="cttl">Ø Chance nach ERP</div><div id="ach-erp"></div></div><div class="card"><div class="cttl">Chancen nach Branche</div><div id="ach-br"></div></div></div><div class="g2"><div class="card"><div class="cttl">Leads nach Region</div><div id="ach-land"></div></div><div class="card"><div class="cttl">ERP-Alter Verteilung</div><div id="ach-age"></div></div></div></div>
 </div>
 <div class="page" id="page-scraper">
-<div class="scho"><div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div><div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div><div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:11px">Oder KI-Scan:</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:4px">🇦🇹 Österreich</div><div class="chips" id="regchips"><span class="chip" data-v="Wien">Wien</span><span class="chip" data-v="Niederösterreich">Niederösterreich</span><span class="chip" data-v="Oberösterreich">Oberösterreich</span><span class="chip" data-v="Steiermark">Steiermark</span><span class="chip" data-v="Tirol">Tirol</span><span class="chip" data-v="Salzburg">Salzburg</span><span class="chip" data-v="Kärnten">Kärnten</span><span class="chip" data-v="Vorarlberg">Vorarlberg</span><span class="chip" data-v="Burgenland">Burgenland</span><span class="chip" data-v="🇩🇪" style="opacity:.4;cursor:default;pointer-events:none">·</span><span class="chip" data-v="Deutschland">Deutschland</span><span class="chip" data-v="Bayern">Bayern</span><span class="chip" data-v="Baden-Württemberg">Baden-Württemberg</span><span class="chip" data-v="NRW">NRW</span><span class="chip" data-v="Hessen">Hessen</span><span class="chip" data-v="🇨🇭" style="opacity:.4;cursor:default;pointer-events:none">·</span><span class="chip" data-v="Schweiz">Schweiz</span></div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:8px;margin-bottom:4px">Branchen</div><div class="chips" id="indchips"><span class="chip" data-v="Metalltechnik">Metalltechnik</span><span class="chip" data-v="Logistik">Logistik</span><span class="chip" data-v="Produktion">Produktion</span><span class="chip" data-v="Großhandel">Großhandel</span><span class="chip" data-v="Maschinenbau">Maschinenbau</span><span class="chip" data-v="Lebensmittel">Lebensmittel</span><span class="chip" data-v="Bau">Bau</span><span class="chip" data-v="Handel">Handel</span><span class="chip" data-v="Automotive">Automotive</span><span class="chip" data-v="IT/Software">IT/Software</span></div><div style="display:flex;align-items:center;gap:9px;margin-top:12px"><select id="scanmax" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="10">10 Firmen</option><option value="25" selected>25 Firmen</option><option value="50">50 Firmen</option></select><select id="scanmin" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="0">Alle Scores</option><option value="45" selected>Warm+ (≥45)</option><option value="70">Hot only (≥70)</option></select><button class="bscan" id="scanbtn">🚀 KI-Scan</button><button class="bscan" id="demobtn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25)">Demo laden</button></div></div>
+<div class="scho">
+<div class="shtl">🌐 Website-Scraper &amp; KI-Analyse</div>
+<div class="shsb">URL direkt analysieren oder KI-Scan für ganze Branchen starten</div>
+<div class="shrow"><input class="shinp" type="url" id="scrapeurl" placeholder="https://beispiel-firma.at — analysieren..."><button class="bscan" id="scrapebtn">🔍 Analysieren</button></div>
+<div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:13px;margin-bottom:6px;font-weight:700">KI-Scan konfigurieren:</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;font-weight:800">📍 Region</div>
+<div class="chips" id="regchips">
+<span class="chip" data-v="Wien">Wien</span><span class="chip" data-v="Niederösterreich">Niederösterreich</span><span class="chip" data-v="Oberösterreich">Oberösterreich</span><span class="chip" data-v="Steiermark">Steiermark</span><span class="chip" data-v="Tirol">Tirol</span><span class="chip" data-v="Salzburg">Salzburg</span><span class="chip" data-v="Kärnten">Kärnten</span><span class="chip" data-v="Vorarlberg">Vorarlberg</span><span class="chip" data-v="Burgenland">Burgenland</span>
+<span class="chip" data-v="Deutschland">Deutschland</span><span class="chip" data-v="Bayern">Bayern</span><span class="chip" data-v="Baden-Württemberg">Baden-Württemberg</span><span class="chip" data-v="NRW">NRW</span><span class="chip" data-v="Hessen">Hessen</span><span class="chip" data-v="Sachsen">Sachsen</span><span class="chip" data-v="Hamburg">Hamburg</span><span class="chip" data-v="Berlin">Berlin</span>
+<span class="chip" data-v="Schweiz">Schweiz</span>
+</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin:10px 0 5px;font-weight:800">🏭 Branche — Fertigung &amp; Industrie</div>
+<div class="chips" id="indchips">
+<span class="chip" data-v="Metalltechnik">Metalltechnik</span>
+<span class="chip" data-v="Maschinenbau">Maschinenbau</span>
+<span class="chip" data-v="Anlagenbau">Anlagenbau</span>
+<span class="chip" data-v="Werkzeugbau">Werkzeugbau</span>
+<span class="chip" data-v="Serienfertigung">Serienfertigung</span>
+<span class="chip" data-v="Auftragsfertigung">Auftragsfertigung</span>
+<span class="chip" data-v="Automotive / Zulieferer">Automotive</span>
+<span class="chip" data-v="Kunststofftechnik">Kunststoff</span>
+<span class="chip" data-v="Elektroindustrie">Elektroindustrie</span>
+<span class="chip" data-v="Elektronik / PCB">Elektronik</span>
+<span class="chip" data-v="Schwerindustrie / Stahlbau">Stahlbau</span>
+<span class="chip" data-v="Holzverarbeitung / Möbel">Holz / Möbel</span>
+<span class="chip" data-v="Druckerei / Verpackung">Druck / Verpackung</span>
+<span class="chip" data-v="Textil / Bekleidung">Textil</span>
+<span class="chip" data-v="Medizintechnik">Medizintechnik</span>
+<span class="chip" data-v="Optik / Messtechnik">Optik / Messtechnik</span>
+</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin:8px 0 5px;font-weight:800">🚚 Handel &amp; Logistik</div>
+<div class="chips" id="indchips2">
+<span class="chip" data-v="Großhandel">Großhandel</span>
+<span class="chip" data-v="Technischer Handel">Techn. Handel</span>
+<span class="chip" data-v="Einzelhandel / Filialbetrieb">Einzelhandel</span>
+<span class="chip" data-v="E-Commerce / Online-Handel">E-Commerce</span>
+<span class="chip" data-v="Import / Export">Import/Export</span>
+<span class="chip" data-v="Logistik / Spedition">Logistik</span>
+<span class="chip" data-v="Lagerlogistik / Fulfillment">Lager / Fulfillment</span>
+<span class="chip" data-v="Kfz-Handel / Werkstatt">Kfz-Handel</span>
+</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin:8px 0 5px;font-weight:800">🍕 Lebensmittel, Chemie &amp; Pharma</div>
+<div class="chips" id="indchips3">
+<span class="chip" data-v="Lebensmittelproduktion">Lebensmittel</span>
+<span class="chip" data-v="Getränkeindustrie">Getränke</span>
+<span class="chip" data-v="Fleisch / Molkerei">Fleisch / Molkerei</span>
+<span class="chip" data-v="Chemie / Lacke / Farben">Chemie</span>
+<span class="chip" data-v="Pharma / Life Sciences">Pharma</span>
+<span class="chip" data-v="Reinigungsmittel / Kosmetik">Kosmetik / Reinigung</span>
+</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin:8px 0 5px;font-weight:800">🏗 Bau &amp; Handwerk</div>
+<div class="chips" id="indchips4">
+<span class="chip" data-v="Bau / Bauunternehmen">Bau</span>
+<span class="chip" data-v="Haustechnik / HKLS">Haustechnik / HKLS</span>
+<span class="chip" data-v="Elektrotechnik / Installation">Elektrotechnik</span>
+<span class="chip" data-v="Sanitär / Heizung">Sanitär / Heizung</span>
+<span class="chip" data-v="Fensterbau / Türen">Fensterbau</span>
+<span class="chip" data-v="Tiefbau / Infrastruktur">Tiefbau</span>
+</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin:8px 0 5px;font-weight:800">💼 Dienstleistung &amp; IT</div>
+<div class="chips" id="indchips5">
+<span class="chip" data-v="IT / Software / SaaS">IT / Software</span>
+<span class="chip" data-v="Beratung / Consulting">Beratung</span>
+<span class="chip" data-v="Personaldienstleistung">Personal</span>
+<span class="chip" data-v="Facility Management">Facility Management</span>
+<span class="chip" data-v="Sicherheitstechnik">Sicherheitstechnik</span>
+<span class="chip" data-v="Wartung / Service">Wartung / Service</span>
+<span class="chip" data-v="Veranstaltung / Event">Events</span>
+</div>
+
+<div style="font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px;margin:10px 0 5px;font-weight:800">🖥 Aktuelles ERP-System (optional — gezieltere Suche)</div>
+<div class="chips" id="erpchips">
+<span class="chip" data-v="SAP Business ByDesign">SAP ByDesign</span>
+<span class="chip" data-v="SAP Business One">SAP Business One</span>
+<span class="chip" data-v="Microsoft Dynamics NAV / Navision">Navision</span>
+<span class="chip" data-v="Microsoft Dynamics GP">Dynamics GP</span>
+<span class="chip" data-v="Microsoft Dynamics 365 Business Central">Business Central</span>
+<span class="chip" data-v="Sage 50 / Sage 100">Sage 50/100</span>
+<span class="chip" data-v="APPlus ERP">APPlus</span>
+<span class="chip" data-v="PLANAT ERP">PLANAT</span>
+<span class="chip" data-v="VISMA Business">VISMA</span>
+<span class="chip" data-v="ISEntial ERP">ISEntial</span>
+<span class="chip" data-v="proALPHA ERP">proALPHA</span>
+<span class="chip" data-v="Ramsauer &amp; Stürmer (Aptean)">R&amp;S Aptean</span>
+<span class="chip" data-v="Infor ERP LN">Infor LN</span>
+<span class="chip" data-v="Epicor ERP">Epicor</span>
+<span class="chip" data-v="Abas ERP">Abas</span>
+<span class="chip" data-v="Sage X3">Sage X3</span>
+<span class="chip" data-v="Oxaion ERP">Oxaion</span>
+<span class="chip" data-v="BMD">BMD</span>
+<span class="chip" data-v="SelectLine">SelectLine</span>
+<span class="chip" data-v="Lexware">Lexware</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:9px;margin-top:12px;flex-wrap:wrap">
+<select id="scanmax" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="10">10 Firmen</option><option value="25" selected>25 Firmen</option><option value="50">50 Firmen</option></select>
+<select id="scanmin" style="background:rgba(255,255,255,.92);border:1.5px solid rgba(255,255,255,.4);border-radius:var(--r);padding:7px 11px;color:#1a202c;font-family:var(--font);font-size:12.5px;font-weight:600;outline:none"><option value="0">Alle Scores</option><option value="45" selected>Warm+ (≥45)</option><option value="70">Hot only (≥70)</option></select>
+<button class="bscan" id="scanbtn">🚀 KI-Scan</button>
+<button class="bscan" id="demobtn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25)">Demo laden</button>
+</div>
+</div>
 <div class="prog" id="prog"><div class="proghd"><h3 id="progttl">Scanne...</h3><span class="progpct" id="progpct">0%</span></div><div class="progbar"><div class="progfill" id="progfill"></div></div><div class="logbox" id="proglog"></div></div>
 <div class="ikpig" id="ikpig" style="display:none"><div class="ikpi itot"><div class="ikpiv" id="iktot">0</div><div class="ikpil">Analysiert</div></div><div class="ikpi ihot"><div class="ikpiv" id="ikhot">0</div><div class="ikpil">Hot ≥70</div></div><div class="ikpi iwarm"><div class="ikpiv" id="ikwarm">0</div><div class="ikpil">Warm 45-69</div></div><div class="ikpi icold"><div class="ikpiv" id="ikcold">0</div><div class="ikpil">Cold 20-44</div></div><div class="ikpi iavg"><div class="ikpiv" id="ikavg">-</div><div class="ikpil">Ø Score</div></div></div>
 <div id="iresults" style="display:none"><div class="tw"><div class="twh"><div style="font-size:13px;font-weight:700">KI-Ergebnisse</div><div style="display:flex;gap:8px"><button class="btn btng btnsm" id="icsv">↓ CSV</button><button class="btn btng btnsm" id="iclr">↺ Reset</button></div></div><div style="max-height:calc(100vh - 430px);overflow-y:auto"><table><thead><tr><th>#</th><th>Unternehmen</th><th>Ort</th><th>Branche</th><th style="text-align:center">Score</th><th>Kat.</th><th style="text-align:center">Qual.</th><th>Indikatoren</th><th></th></tr></thead><tbody id="itbody"></tbody></table></div></div></div>
@@ -903,8 +1009,8 @@ function setupEvents(){
     t.onclick = function(){ aTab(t.getAttribute('data-at'), t); };
   });
 
-  // Scraper chips (nur regchips + indchips, nicht globale .chip-Selektion)
-  document.querySelectorAll('#regchips .chip, #indchips .chip').forEach(function(c){
+  // Scraper chips (alle Chip-Gruppen des Scrapers per Delegation)
+  document.querySelectorAll('#regchips .chip, #indchips .chip, #indchips2 .chip, #indchips3 .chip, #indchips4 .chip, #indchips5 .chip, #erpchips .chip').forEach(function(c){
     c.onclick = function(){ c.classList.toggle('on'); };
   });
   document.getElementById('scrapebtn').onclick = scrapeSingle;
@@ -1475,10 +1581,11 @@ async function startScan(){
   if(!localStorage.getItem('cu_apikey')){ showToast('Kein API Key','err'); return; }
   if(iScanning) return;
   var regs = [].slice.call(document.querySelectorAll('#regchips .chip.on')).map(function(c){ return c.getAttribute('data-v'); });
-  var inds = [].slice.call(document.querySelectorAll('#indchips .chip.on')).map(function(c){ return c.getAttribute('data-v'); });
+  var inds = [].slice.call(document.querySelectorAll('#indchips .chip.on, #indchips2 .chip.on, #indchips3 .chip.on, #indchips4 .chip.on, #indchips5 .chip.on')).map(function(c){ return c.getAttribute('data-v'); });
+  var erps = [].slice.call(document.querySelectorAll('#erpchips .chip.on')).map(function(c){ return c.getAttribute('data-v'); });
   var maxN = parseInt(document.getElementById('scanmax').value);
   var minSc = parseInt(document.getElementById('scanmin').value);
-  if(!regs.length || !inds.length){ showToast('Region + Branche w\xe4hlen','err'); return; }
+  if(!regs.length || !inds.length){ showToast('Region + Branche wählen','err'); return; }
   iScanning = true; INTEL = [];
   document.getElementById('prog').classList.add('on');
   document.getElementById('proglog').textContent = '';
@@ -1487,9 +1594,10 @@ async function startScan(){
   document.getElementById('iempty').style.display = 'none';
   document.getElementById('scanbtn').disabled = true;
   setProg(0,'Firmenliste generieren...');
-  iLog('Scan: '+regs.join(', ')+' | '+inds.join(', ')+' | max '+maxN);
+  var erpHint = erps.length ? ' Die Firmen sollen wahrscheinlich eines dieser ERP-Systeme nutzen: '+erps.join(', ')+'.' : '';
+  iLog('Scan: '+regs.join(', ')+' | '+inds.join(', ')+(erps.length?' | ERP: '+erps.join(', '):'')+' | max '+maxN);
   try{
-    var seed = 'Generiere '+maxN+' realistische KMU aus Regionen: '+regs.join(', ')+', Branchen: '+inds.join(', ')+'. NUR JSON-Array:\n[{"name":"GmbH","city":"Stadt","state":"'+regs[0]+'","industry":"'+inds[0]+'","size":"51-200","website":"firma.at","linkedin_url":"https://linkedin.com/company/firma","email":"office@firma.at","phone":"+43 XXX","employees":80,"multiLocation":false,"founded":2005}]';
+    var seed = 'Generiere '+maxN+' realistische KMU aus Regionen: '+regs.join(', ')+', Branchen: '+inds.join(', ')+'.'+erpHint+' NUR JSON-Array:\n[{"name":"GmbH","city":"Stadt","state":"'+regs[0]+'","industry":"'+inds[0]+'","erp_hint":"'+( erps[0]||'')+'","size":"51-200","website":"firma.at","linkedin_url":"https://linkedin.com/company/firma","email":"office@firma.at","phone":"+43 XXX","employees":80,"multiLocation":false,"founded":2005}]';
     var raw1 = await callAPI(seed, Math.max(2000,maxN*80), 'Firmenliste');
     var companies = [];
     try{
